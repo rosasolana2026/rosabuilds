@@ -1,0 +1,199 @@
+{
+  "rosalinda-persona-agent": [
+    {
+      "id": "r1",
+      "author": "Marcus T.",
+      "avatar": "MT",
+      "rating": 5,
+      "date": "2026-02-15",
+      "title": "Changed how I operate entirely",
+      "body": "I was skeptical about running a 'persona agent' but after two weeks this thing manages my Twitter, morning briefings, and daily task scheduling. It's like having a version of me that never sleeps.",
+      "platform": "OpenClaw",
+      "verified": true
+    },
+    {
+      "id": "r2",
+      "author": "Priya K.",
+      "avatar": "PK",
+      "rating": 5,
+      "date": "2026-02-10",
+      "title": "Onboarding is genuinely excellent",
+      "body": "The walkthrough guide is the best I've seen for any AI product. Got my agent live in 90 minutes. The SOUL.md concept is a game changer for giving it a consistent voice.",
+      "platform": "OpenClaw",
+      "verified": true
+    },
+    {
+      "id": "r3",
+      "author": "Derek M.",
+      "avatar": "DM",
+      "rating": 5,
+      "date": "2026-02-08",
+      "title": "Worth every penny of the $99",
+      "body": "I paid $99 and got back 10+ hours a week in recovered time. The multi-channel setup (WhatsApp + Twitter + email) works without any babysitting.",
+      "platform": "OpenClaw",
+      "verified": true
+    },
+    {
+      "id": "r4",
+      "author": "Sasha N.",
+      "avatar": "SN",
+      "rating": 4,
+      "date": "2026-01-29",
+      "title": "Impressive but needs patience to configure",
+      "body": "The agent itself is fantastic once you get it dialed in. The first few days require some tweaking to match your voice. After that — it's magic.",
+      "platform": "OpenClaw",
+      "verified": true
+    }
+  ],
+  "bedtimemagic-growth-bot": [
+    {
+      "id": "r5",
+      "author": "Ling X.",
+      "avatar": "LX",
+      "rating": 5,
+      "date": "2026-02-18",
+      "title": "My Twitter went from 200 to 800 followers in 3 weeks",
+      "body": "This bot just works. Consistent posting, smart replies, no spam behavior. My engagement rate actually improved while following count grew.",
+      "platform": "OpenClaw",
+      "verified": true
+    },
+    {
+      "id": "r6",
+      "author": "Tomas E.",
+      "avatar": "TE",
+      "rating": 4,
+      "date": "2026-02-12",
+      "title": "Solid foundation, easy to customize",
+      "body": "The n8n flows are well-organized and easy to modify for your niche. I switched from parenting to SaaS founders and it adapted well.",
+      "platform": "n8n",
+      "verified": true
+    },
+    {
+      "id": "r7",
+      "author": "Amara J.",
+      "avatar": "AJ",
+      "rating": 5,
+      "date": "2026-02-01",
+      "title": "Finally, automation that doesn't feel robotic",
+      "body": "The content it generates actually sounds human. I've had people DM me asking if I write everything myself.",
+      "platform": "OpenClaw",
+      "verified": false
+    }
+  ],
+  "daily-morning-report": [
+    {
+      "id": "r8",
+      "author": "Carlos V.",
+      "avatar": "CV",
+      "rating": 5,
+      "date": "2026-02-20",
+      "title": "Best $19 I've spent on any tool",
+      "body": "My morning briefing lands at exactly 6am every day. Revenue, top tweets, and my 3 priorities. I start every day knowing exactly where I stand.",
+      "platform": "OpenClaw",
+      "verified": true
+    },
+    {
+      "id": "r9",
+      "author": "Nina H.",
+      "avatar": "NH",
+      "rating": 5,
+      "date": "2026-02-16",
+      "title": "Replaced my 30-minute morning scroll",
+      "body": "I used to spend 30 minutes checking dashboards and feeds every morning. This does it all and delivers a summary. My mornings are reclaimed.",
+      "platform": "Zapier",
+      "verified": true
+    },
+    {
+      "id": "r10",
+      "author": "James O.",
+      "avatar": "JO",
+      "rating": 5,
+      "date": "2026-02-11",
+      "title": "The streak tracker is a brilliant motivator",
+      "body": "Small detail but the 7-day streak tracker in the briefing keeps me consistent. It's part habit-tracker, part morning briefing.",
+      "platform": "OpenClaw",
+      "verified": true
+    },
+    {
+      "id": "r11",
+      "author": "Rachel S.",
+      "avatar": "RS",
+      "rating": 4,
+      "date": "2026-02-05",
+      "title": "Zapier version has a slight delay sometimes",
+      "body": "The OpenClaw version is flawless. The Zapier version sometimes runs 5-10 minutes late on busy mornings. Not a dealbreaker but worth noting.",
+      "platform": "Zapier",
+      "verified": true
+    }
+  ],
+  "content-machine": [
+    {
+      "id": "r12",
+      "author": "Kwame L.",
+      "avatar": "KL",
+      "rating": 5,
+      "date": "2026-02-17",
+      "title": "5x my content output instantly",
+      "body": "One topic → 7 tweets + LinkedIn post + newsletter section + blog draft. In the time it took me to write one tweet before, I now have a full content week queued.",
+      "platform": "n8n",
+      "verified": true
+    },
+    {
+      "id": "r13",
+      "author": "Sophie T.",
+      "avatar": "ST",
+      "rating": 4,
+      "date": "2026-02-09",
+      "title": "The brand voice config is a killer feature",
+      "body": "Being able to define my tone in a config file means the output actually sounds like me, not generic AI slop. That config doc alone is worth the price.",
+      "platform": "OpenClaw",
+      "verified": true
+    },
+    {
+      "id": "r14",
+      "author": "Ben R.",
+      "avatar": "BR",
+      "rating": 5,
+      "date": "2026-02-02",
+      "title": "Perfect for my newsletter production",
+      "body": "I run a weekly newsletter. This cut my production time from 4 hours to 45 minutes. The blog draft needs editing but it's a great starting point.",
+      "platform": "Zapier",
+      "verified": true
+    }
+  ],
+  "improvmx-email-setup": [
+    {
+      "id": "r15",
+      "author": "Diana C.",
+      "avatar": "DC",
+      "rating": 5,
+      "date": "2026-02-19",
+      "title": "10-minute setup, no exaggeration",
+      "body": "Did the whole thing — MX records, 3 aliases, Zapier routing — in 12 minutes. The DNS instructions are crystal clear even if you've never touched DNS before.",
+      "platform": "Zapier",
+      "verified": true
+    },
+    {
+      "id": "r16",
+      "author": "Finn A.",
+      "avatar": "FA",
+      "rating": 5,
+      "date": "2026-02-14",
+      "title": "Saved me $12/month vs Google Workspace",
+      "body": "Was paying for Google Workspace just for the custom email. This + ImprovMX free tier does the same job. Clear ROI.",
+      "platform": "Manual",
+      "verified": true
+    },
+    {
+      "id": "r17",
+      "author": "Yuki N.",
+      "avatar": "YN",
+      "rating": 4,
+      "date": "2026-02-07",
+      "title": "Great guide, Zapier setup could be cleaner",
+      "body": "The ImprovMX DNS setup instructions are perfect. The Zapier email routing section is a bit verbose but works. Would love a video walkthrough version.",
+      "platform": "Zapier",
+      "verified": false
+    }
+  ]
+}

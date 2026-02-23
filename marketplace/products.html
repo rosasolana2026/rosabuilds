@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Agents — AgentMart</title>
+  <meta name="description" content="Browse all AI agents and automations on AgentMart. Filter by category, price, and platform.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/marketplace/" class="nav-logo">
+    <span class="logo-icon">⬡</span>
+    <span class="logo-text">AgentMart</span>
+    <span class="logo-tag">beta</span>
+  </a>
+  <div class="nav-links">
+    <a href="products.html" class="active">Browse</a>
+    <a href="creator.html">Creator</a>
+    <a href="index.html#categories">Categories</a>
+  </div>
+  <a href="products.html" class="nav-cta">Browse Agents →</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>Browse <span class="gradient-text">Agents &amp; Tools</span></h1>
+    <p>Production-ready AI agents and automation stacks. Filter to find what fits your stack.</p>
+  </div>
+</div>
+
+<!-- SEARCH & FILTERS -->
+<section class="filter-section">
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search-input" placeholder="Search agents, tools, automations..." class="search-input">
+      <kbd class="search-kbd">⌘K</kbd>
+    </div>
+    <div class="filter-controls">
+      <select id="filter-category" class="filter-select">
+        <option value="">All Categories</option>
+        <option value="Autonomous Agents">Autonomous Agents</option>
+        <option value="Growth & Marketing">Growth &amp; Marketing</option>
+        <option value="Productivity">Productivity</option>
+        <option value="Content & Creation">Content &amp; Creation</option>
+        <option value="Infrastructure">Infrastructure</option>
+      </select>
+      <select id="filter-platform" class="filter-select">
+        <option value="">All Platforms</option>
+        <option value="OpenClaw">OpenClaw</option>
+        <option value="n8n">n8n</option>
+        <option value="Zapier">Zapier</option>
+        <option value="Make.com">Make.com</option>
+        <option value="Manual">Manual</option>
+      </select>
+      <select id="filter-price" class="filter-select">
+        <option value="">Any Price</option>
+        <option value="0-20">Under $20</option>
+        <option value="20-50">$20–$50</option>
+        <option value="50-100">$50–$100</option>
+        <option value="100-999">$100+</option>
+      </select>
+      <select id="filter-sort" class="filter-select">
+        <option value="featured">Featured</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+        <option value="rating">Top Rated</option>
+      </select>
+    </div>
+  </div>
+  <div class="active-filters" id="active-filters"></div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-section">
+  <div class="results-meta">
+    <span id="results-count">Loading...</span>
+  </div>
+  <div class="products-grid products-grid-full" id="products-grid">
+    <!-- Populated by JS -->
+  </div>
+  <div class="no-results hidden" id="no-results">
+    <div class="no-results-icon">🔍</div>
+    <h3>No agents found</h3>
+    <p>Try adjusting your filters or search term.</p>
+    <button onclick="clearFilters()" class="btn-ghost">Clear Filters</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">AgentMart</span>
+      <p>Built by <a href="creator.html">Rosalinda Solana</a> · Powered by rosabuilds.com</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="creator.html">Creator Profile</a>
+      <a href="https://rosabuilds.com">rosabuilds.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AgentMart · rosabuilds.com</span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>
+  // Track referral
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get('ref');
+  if (ref) localStorage.setItem('agentmart_ref', ref);
+
+  // Pre-fill category from URL
+  const urlCat = urlParams.get('category');
+  if (urlCat) {
+    document.getElementById('filter-category').value = urlCat;
+  }
+
+  let allProducts = [];
+
+  async function init() {
+    const res = await fetch('data/products.json');
+    allProducts = await res.json();
+    renderFiltered();
+
+    document.getElementById('search-input').addEventListener('input', renderFiltered);
+    document.getElementById('filter-category').addEventListener('change', renderFiltered);
+    document.getElementById('filter-platform').addEventListener('change', renderFiltered);
+    document.getElementById('filter-price').addEventListener('change', renderFiltered);
+    document.getElementById('filter-sort').addEventListener('change', renderFiltered);
+
+    // CMD+K focus search
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('search-input').focus();
+      }
+    });
+  }
+
+  function renderFiltered() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    const cat = document.getElementById('filter-category').value;
+    const plat = document.getElementById('filter-platform').value;
+    const price = document.getElementById('filter-price').value;
+    const sort = document.getElementById('filter-sort').value;
+
+    let results = allProducts.filter(p => {
+      if (q && !p.name.toLowerCase().includes(q) && !p.description.toLowerCase().includes(q) && !p.tags.some(t => t.toLowerCase().includes(q))) return false;
+      if (cat && p.category !== cat) return false;
+      if (plat && !p.platforms.includes(plat)) return false;
+      if (price) {
+        const [min, max] = price.split('-').map(Number);
+        if (p.price < min || p.price > max) return false;
+      }
+      return true;
+    });
+
+    if (sort === 'price-asc') results.sort((a, b) => a.price - b.price);
+    else if (sort === 'price-desc') results.sort((a, b) => b.price - a.price);
+    else if (sort === 'rating') results.sort((a, b) => b.rating - a.rating);
+    else results.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+
+    const grid = document.getElementById('products-grid');
+    const noRes = document.getElementById('no-results');
+    const countEl = document.getElementById('results-count');
+
+    if (results.length === 0) {
+      grid.innerHTML = '';
+      noRes.classList.remove('hidden');
+      countEl.textContent = '0 products found';
+    } else {
+      noRes.classList.add('hidden');
+      grid.innerHTML = results.map(p => renderProductCard(p)).join('');
+      countEl.textContent = `${results.length} product${results.length !== 1 ? 's' : ''} found`;
+    }
+
+    // Active filter tags
+    const af = document.getElementById('active-filters');
+    const tags = [];
+    if (q) tags.push(`<span class="af-tag">Search: "${q}" <button onclick="clearSearch()">×</button></span>`);
+    if (cat) tags.push(`<span class="af-tag">${cat} <button onclick="clearCat()">×</button></span>`);
+    if (plat) tags.push(`<span class="af-tag">${plat} <button onclick="clearPlat()">×</button></span>`);
+    if (price) tags.push(`<span class="af-tag">Price: ${priceLabel(price)} <button onclick="clearPrice()">×</button></span>`);
+    af.innerHTML = tags.join('');
+  }
+
+  function priceLabel(p) {
+    if (p === '0-20') return 'Under $20';
+    if (p === '20-50') return '$20–$50';
+    if (p === '50-100') return '$50–$100';
+    if (p === '100-999') return '$100+';
+    return p;
+  }
+
+  function clearFilters() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('filter-category').value = '';
+    document.getElementById('filter-platform').value = '';
+    document.getElementById('filter-price').value = '';
+    renderFiltered();
+  }
+
+  function clearSearch() { document.getElementById('search-input').value = ''; renderFiltered(); }
+  function clearCat() { document.getElementById('filter-category').value = ''; renderFiltered(); }
+  function clearPlat() { document.getElementById('filter-platform').value = ''; renderFiltered(); }
+  function clearPrice() { document.getElementById('filter-price').value = ''; renderFiltered(); }
+
+  function stars(rating) {
+    return '★'.repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? '½' : '');
+  }
+
+  function renderProductCard(p) {
+    const refStored = localStorage.getItem('agentmart_ref') || '';
+    const refParam = refStored ? `&ref=${refStored}` : '';
+    const badge = p.badge ? `<span class="badge badge-${p.badge.toLowerCase().replace(' ','-')}">${p.badge}</span>` : '';
+    const emoji = p.category === 'Autonomous Agents' ? '🤖' : p.category === 'Growth & Marketing' ? '📈' : p.category === 'Productivity' ? '⚡' : p.category === 'Content & Creation' ? '✍️' : '🔧';
+    return `
+      <a href="product.html?id=${p.id}${refParam}" class="product-card">
+        <div class="pc-image">
+          <div class="pc-placeholder">${emoji}</div>
+          ${badge}
+        </div>
+        <div class="pc-body">
+          <div class="pc-platforms">${p.platforms.map(pl => `<span class="platform-tag">${pl}</span>`).join('')}</div>
+          <h3 class="pc-name">${p.name}</h3>
+          <p class="pc-tagline">${p.tagline}</p>
+          <div class="pc-footer">
+            <span class="pc-price">$${p.price}</span>
+            <span class="pc-rating">${stars(p.rating)} <span class="pc-rc">(${p.reviewCount})</span></span>
+          </div>
+        </div>
+      </a>
+    `;
+  }
+
+  init();
+</script>
+</body>
+</html>

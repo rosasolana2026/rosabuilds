@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Product — AgentMart</title>
+  <meta name="description" id="page-desc" content="AI agent on AgentMart">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/marketplace/" class="nav-logo">
+    <span class="logo-icon">⬡</span>
+    <span class="logo-text">AgentMart</span>
+    <span class="logo-tag">beta</span>
+  </a>
+  <div class="nav-links">
+    <a href="products.html">Browse</a>
+    <a href="creator.html">Creator</a>
+    <a href="index.html#categories">Categories</a>
+  </div>
+  <a href="products.html" class="nav-cta">Browse Agents →</a>
+</nav>
+
+<!-- PRODUCT CONTENT -->
+<div class="product-page" id="product-page">
+  <!-- Populated by JS -->
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">AgentMart</span>
+      <p>Built by <a href="creator.html">Rosalinda Solana</a> · Powered by rosabuilds.com</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Browse</a>
+      <a href="creator.html">Creator Profile</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 AgentMart · rosabuilds.com</span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('id');
+  const ref = urlParams.get('ref');
+
+  // Store referral
+  if (ref) {
+    localStorage.setItem('agentmart_ref', ref);
+    localStorage.setItem(`agentmart_ref_product_${productId}`, ref);
+    // Log referral click
+    const refLog = JSON.parse(localStorage.getItem('agentmart_ref_log') || '[]');
+    refLog.push({ ref, productId, ts: Date.now() });
+    localStorage.setItem('agentmart_ref_log', JSON.stringify(refLog));
+  }
+
+  async function init() {
+    if (!productId) {
+      window.location.href = 'products.html';
+      return;
+    }
+    const [prodRes, reviewRes] = await Promise.all([
+      fetch('data/products.json'),
+      fetch('data/reviews.json')
+    ]);
+    const products = await prodRes.json();
+    const reviews = await reviewRes.json();
+    const product = products.find(p => p.id === productId);
+    if (!product) { window.location.href = 'products.html'; return; }
+
+    // Update meta
+    document.getElementById('page-title').textContent = `${product.name} — AgentMart`;
+    document.getElementById('page-desc').content = product.description;
+
+    const productReviews = reviews[productId] || [];
+    const refStored = ref || localStorage.getItem('agentmart_ref') || '';
+    const buyUrl = product.stripeLink + (refStored ? `?client_reference_id=ref_${refStored}` : '');
+
+    // Emoji for category
+    const emoji = product.category === 'Autonomous Agents' ? '🤖' : product.category === 'Growth & Marketing' ? '📈' : product.category === 'Productivity' ? '⚡' : product.category === 'Content & Creation' ? '✍️' : '🔧';
+    const badge = product.badge ? `<span class="badge">${product.badge}</span>` : '';
+    const stars = n => '★'.repeat(Math.floor(n)) + (n % 1 >= 0.5 ? '★' : '☆') + '☆'.repeat(5 - Math.ceil(n));
+
+    // Build referral share link
+    const shareUrl = `https://rosabuilds.com/marketplace/product.html?id=${productId}&ref=share`;
+
+    const related = products.filter(p => p.id !== productId && (p.category === product.category || p.platforms.some(pl => product.platforms.includes(pl)))).slice(0, 3);
+
+    document.getElementById('product-page').innerHTML = `
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <a href="index.html">AgentMart</a>
+        <span>›</span>
+        <a href="products.html?category=${encodeURIComponent(product.category)}">${product.category}</a>
+        <span>›</span>
+        <span>${product.name}</span>
+      </div>
+
+      <!-- Main Product Layout -->
+      <div class="product-layout">
+        <!-- Left: Main Content -->
+        <div class="product-main">
+          <div class="product-hero-card">
+            <div class="phc-image">
+              <div class="phc-emoji">${emoji}</div>
+            </div>
+            <div class="phc-info">
+              <div class="phc-top">
+                <div class="phc-platforms">${product.platforms.map(pl => `<span class="platform-tag">${pl}</span>`).join('')}</div>
+                ${badge}
+              </div>
+              <h1 class="phc-name">${product.name}</h1>
+              <p class="phc-tagline">${product.tagline}</p>
+              <div class="phc-meta">
+                <span class="rating-stars">${stars(product.rating)}</span>
+                <span class="rating-num">${product.rating}</span>
+                <span class="rating-count">(${product.reviewCount} reviews)</span>
+                <span class="phc-sep">·</span>
+                <span class="phc-cat">${product.category}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="product-section">
+            <h2>About This Agent</h2>
+            <p class="product-desc">${product.longDescription}</p>
+          </div>
+
+          <!-- Tags -->
+          <div class="product-section">
+            <h2>Tags</h2>
+            <div class="tags-row">${product.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          </div>
+
+          <!-- Platforms -->
+          <div class="product-section">
+            <h2>Compatible Platforms</h2>
+            <div class="plat-list">${product.platforms.map(pl => `<div class="plat-item"><span class="plat-dot"></span>${pl}</div>`).join('')}</div>
+          </div>
+
+          <!-- Reviews -->
+          <div class="product-section" id="reviews">
+            <h2>Reviews <span class="review-count-badge">${productReviews.length}</span></h2>
+            <div class="reviews-summary">
+              <div class="rs-score">${product.rating}</div>
+              <div class="rs-right">
+                <div class="rs-stars">${stars(product.rating)}</div>
+                <div class="rs-label">Based on ${product.reviewCount} reviews</div>
+              </div>
+            </div>
+            <div class="reviews-list">
+              ${productReviews.map(r => `
+                <div class="review-card">
+                  <div class="rc-header">
+                    <div class="rc-avatar">${r.avatar}</div>
+                    <div class="rc-meta">
+                      <span class="rc-author">${r.author}</span>
+                      ${r.verified ? '<span class="rc-verified">✓ Verified</span>' : ''}
+                      <span class="rc-platform">${r.platform}</span>
+                    </div>
+                    <div class="rc-right">
+                      <span class="rc-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+                      <span class="rc-date">${r.date}</span>
+                    </div>
+                  </div>
+                  <div class="rc-title">${r.title}</div>
+                  <p class="rc-body">${r.body}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Related -->
+          ${related.length > 0 ? `
+          <div class="product-section">
+            <h2>You Might Also Like</h2>
+            <div class="related-grid">
+              ${related.map(rp => {
+                const rem = rp.category === 'Autonomous Agents' ? '🤖' : rp.category === 'Growth & Marketing' ? '📈' : rp.category === 'Productivity' ? '⚡' : rp.category === 'Content & Creation' ? '✍️' : '🔧';
+                return `<a href="product.html?id=${rp.id}" class="related-card">
+                  <div class="relc-icon">${rem}</div>
+                  <div class="relc-info">
+                    <span class="relc-name">${rp.name}</span>
+                    <span class="relc-price">$${rp.price}</span>
+                  </div>
+                </a>`;
+              }).join('')}
+            </div>
+          </div>
+          ` : ''}
+        </div>
+
+        <!-- Right: Purchase Sidebar -->
+        <div class="product-sidebar">
+          <div class="sidebar-card sticky-sidebar">
+            <div class="sb-price">$${product.price}</div>
+            <div class="sb-price-note">One-time purchase · Instant access</div>
+            <a href="${buyUrl}" class="btn-primary btn-full btn-buy" target="_blank" rel="noopener">
+              Buy Now — $${product.price}
+            </a>
+            <div class="sb-guarantee">
+              <span class="sb-g-icon">🛡</span>
+              <span>Satisfaction guaranteed. Reach out if it doesn't work for you.</span>
+            </div>
+            <div class="sb-divider"></div>
+            <div class="sb-details">
+              <div class="sb-row"><span>Category</span><span>${product.category}</span></div>
+              <div class="sb-row"><span>Platforms</span><span>${product.platforms.join(', ')}</span></div>
+              <div class="sb-row"><span>Delivery</span><span>Instant download</span></div>
+              <div class="sb-row"><span>License</span><span>Single operator</span></div>
+            </div>
+            <div class="sb-divider"></div>
+            <div class="sb-share">
+              <span>Share &amp; Earn</span>
+              <div class="share-link-wrap">
+                <input type="text" class="share-link-input" id="share-link-input" value="https://rosabuilds.com/marketplace/product.html?id=${productId}&ref=your-name" readonly>
+                <button class="share-copy-btn" onclick="copyShareLink()">Copy</button>
+              </div>
+              <p class="sb-share-note">Customize ?ref=your-name to track referrals</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function copyShareLink() {
+    const input = document.getElementById('share-link-input');
+    input.select();
+    navigator.clipboard.writeText(input.value).then(() => {
+      const btn = document.querySelector('.share-copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+
+  init();
+</script>
+</body>
+</html>
