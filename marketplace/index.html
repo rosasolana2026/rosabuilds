@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgentMart — The AI Agent Marketplace</title>
-  <meta name="description" content="Buy and deploy AI agents, automations, and growth tools built by real operators. AgentMart is the marketplace for builders who move fast.">
-  <meta property="og:title" content="AgentMart — The AI Agent Marketplace">
-  <meta property="og:description" content="Production-ready AI agents and automations. Built by operators, for operators.">
+  <title>AgentMart — AI Agents & Automations for Founders</title>
+  <meta name="description" content="Deploy battle-tested AI agents in minutes. Built by real operators, used by founders and solopreneurs. Starting at $9.">
+  <meta property="og:title" content="AgentMart — AI Agents for Founders">
+  <meta property="og:description" content="Production-ready AI agents starting at $9. Free to download on GitHub.">
   <meta property="og:url" content="https://rosabuilds.com/marketplace/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -22,260 +22,494 @@
     <span class="logo-tag">beta</span>
   </a>
   <div class="nav-links">
-    <a href="products.html">Browse</a>
+    <a href="#products">Browse</a>
     <a href="creator.html">Creator</a>
     <a href="#categories">Categories</a>
   </div>
-  <a href="products.html" class="nav-cta">Browse Agents →</a>
+  <a href="#products" class="nav-cta">Browse Agents →</a>
 </nav>
 
-<!-- HERO -->
+<!-- ═══════════════════════════════════════════
+     HERO — What it is (no CTA repeat)
+     ═══════════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-grid-bg"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">
       <span class="pulse-dot"></span>
-      Production-ready AI agents — built by operators
+      Built by operators · Running in production
     </div>
+
     <h1 class="hero-title">
-      The Marketplace for<br>
-      <span class="gradient-text">AI Agents</span> &amp;<br>
-      Automations
+      AI Agents that actually<br>
+      <span class="gradient-text">ship &amp; run</span>
     </h1>
+
     <p class="hero-sub">
-      Buy, deploy, and run battle-tested AI agents and automation stacks.
-      No fluff, no demos that don't ship — everything here runs in production.
+      Real automations built by a real founder — not demos. Each agent is open-source, free to download on GitHub, or grab a guided setup for $9.
     </p>
+
+    <div class="hero-social-proof">
+      <div class="hsp-faces">
+        <!-- Mini SVG avatars -->
+        <div class="hsp-face" style="background:linear-gradient(135deg,#F5F3FF,#C4B5FD)">🦁</div>
+        <div class="hsp-face" style="background:linear-gradient(135deg,#ECFDF5,#6EE7B7)">🦊</div>
+        <div class="hsp-face" style="background:linear-gradient(135deg,#FFF7ED,#FCD34D)">🐻</div>
+        <div class="hsp-face" style="background:linear-gradient(135deg,#EFF6FF,#93C5FD)">🐺</div>
+      </div>
+      <span class="hsp-text"><strong>Used by founders, creators, and solopreneurs</strong> worldwide</span>
+    </div>
+
     <div class="hero-actions">
-      <a href="products.html" class="btn-primary">Browse Agents</a>
-      <a href="creator.html" class="btn-ghost">Meet the Creator</a>
+      <a href="#products" class="btn-primary">Browse Agents ↓</a>
+      <a href="creator.html" class="btn-ghost">Meet Rosalinda</a>
     </div>
+
     <div class="hero-stats">
-      <div class="stat"><span class="stat-num">5</span><span class="stat-label">Agents &amp; Tools</span></div>
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Agents &amp; Tools</span>
+      </div>
       <div class="stat-div"></div>
-      <div class="stat"><span class="stat-num">89</span><span class="stat-label">Sales</span></div>
+      <div class="stat">
+        <span class="stat-num">4.7★</span>
+        <span class="stat-label">Avg Rating</span>
+      </div>
       <div class="stat-div"></div>
-      <div class="stat"><span class="stat-num">4.7★</span><span class="stat-label">Avg Rating</span></div>
+      <div class="stat">
+        <span class="stat-num">$9</span>
+        <span class="stat-label">Starting price</span>
+      </div>
     </div>
   </div>
+
+  <!-- Hero visual — featured card -->
   <div class="hero-visual">
-    <div class="agent-card-preview">
-      <div class="acp-header">
-        <div class="acp-dot green"></div>
-        <div class="acp-dot yellow"></div>
-        <div class="acp-dot red"></div>
-        <span class="acp-title">rosalinda-agent</span>
+    <div class="hero-featured-card">
+      <div class="hfc-top">
+        <div class="hfc-illus">
+          <!-- Robot SVG -->
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="12" width="20" height="16" rx="4" fill="#EDE9FE"/>
+            <rect x="8" y="12" width="20" height="16" rx="4" stroke="#7C3AED" stroke-width="1.5"/>
+            <circle cx="14" cy="19" r="2.5" fill="#7C3AED"/>
+            <circle cx="22" cy="19" r="2.5" fill="#7C3AED"/>
+            <rect x="15" y="23" width="6" height="2" rx="1" fill="#7C3AED"/>
+            <rect x="16" y="7" width="4" height="5" rx="2" fill="#C4B5FD" stroke="#7C3AED" stroke-width="1.5"/>
+            <rect x="3" y="15" width="4" height="7" rx="2" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+            <rect x="29" y="15" width="4" height="7" rx="2" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="hfc-info">
+          <div class="hfc-label">⭐ Featured agent</div>
+          <div class="hfc-name">Rosalinda Persona Agent</div>
+          <div class="hfc-tagline">Your autonomous AI operator, built in your image</div>
+        </div>
+        <div class="hfc-badge">Bestseller</div>
       </div>
-      <div class="acp-body">
-        <div class="acp-line"><span class="acp-key">status</span><span class="acp-val green">● running</span></div>
-        <div class="acp-line"><span class="acp-key">uptime</span><span class="acp-val">23d 14h 6m</span></div>
-        <div class="acp-line"><span class="acp-key">tasks_today</span><span class="acp-val">47</span></div>
-        <div class="acp-line"><span class="acp-key">channels</span><span class="acp-val purple">WhatsApp · Twitter · Email</span></div>
-        <div class="acp-line"><span class="acp-key">memory</span><span class="acp-val">persistent</span></div>
-        <div class="acp-line acp-cmd"><span class="acp-prompt">$</span> agent run morning-report</div>
-        <div class="acp-output">✓ Briefing delivered at 06:00 ET</div>
+
+      <div class="hfc-stats">
+        <div class="hfc-stat"><strong>4.9 ★★★★★</strong> Rating</div>
+        <div class="hfc-stat"><strong>12</strong> Reviews</div>
+        <div class="hfc-stat"><strong>~30 min</strong> Setup</div>
+      </div>
+
+      <div class="hfc-footer">
+        <div class="hfc-price">$9</div>
+        <a href="https://github.com/rosasolana2026/agentmart-rosalinda-persona" target="_blank" class="hfc-free">Free on GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="hero-counter-pill">
+      <div class="hcp-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L12.4 7.6L18 8.2L14 12L15.2 18L10 15L4.8 18L6 12L2 8.2L7.6 7.6L10 2Z" fill="#7C3AED" stroke="#7C3AED" stroke-width="0.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="hcp-text">
+        <div class="hcp-big">47 agents deployed this week</div>
+        <div class="hcp-small">across OpenClaw, n8n, and Zapier</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURED PRODUCTS -->
-<section class="section" id="featured">
-  <div class="section-header">
-    <h2>Featured Agents</h2>
-    <a href="products.html" class="section-link">View all →</a>
+<!-- ═══════════════════════════════════════════
+     HOW IT WORKS — 3 clear steps
+     ═══════════════════════════════════════════ -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">How it works</span>
+        <h2>From zero to running in minutes</h2>
+        <p class="section-sub">Every agent runs on your own stack — you own the code, no lock-in.</p>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num-wrap">
+          <span class="step-num">01</span>
+        </div>
+        <div class="step-icon">🔍</div>
+        <h3>Browse &amp; pick</h3>
+        <p>Find an agent for your use case. All source code is open on GitHub — read it before buying. Works on OpenClaw, n8n, Zapier, and custom stacks.</p>
+      </div>
+      <div class="step">
+        <div class="step-num-wrap">
+          <span class="step-num">02</span>
+        </div>
+        <div class="step-icon">⚡</div>
+        <h3>Download free or pay $9</h3>
+        <p>Clone from GitHub for free, or pay $9 for the guided setup guide, config templates, and priority support. No subscription, ever.</p>
+      </div>
+      <div class="step">
+        <div class="step-num-wrap">
+          <span class="step-num">03</span>
+        </div>
+        <div class="step-icon">🚀</div>
+        <h3>Deploy &amp; customize</h3>
+        <p>Your agent runs in your environment under your control. Fork it, tweak it, make it yours. Most setups take under 30 minutes.</p>
+      </div>
+    </div>
   </div>
-  <div class="products-grid" id="featured-grid">
-    <!-- Populated by JS -->
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CREATOR STRIP — social proof
+     ═══════════════════════════════════════════ -->
+<section class="section" style="padding-top:2.5rem; padding-bottom:2.5rem;">
+  <div class="creator-strip">
+    <!-- SVG avatar for Rosalinda -->
+    <svg class="creator-avatar-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="32" r="32" fill="url(#rgrad)"/>
+      <defs>
+        <linearGradient id="rgrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#7C3AED"/>
+          <stop offset="100%" stop-color="#A78BFA"/>
+        </linearGradient>
+      </defs>
+      <!-- Face -->
+      <ellipse cx="32" cy="26" rx="10" ry="11" fill="#FDEBD0"/>
+      <!-- Hair -->
+      <ellipse cx="32" cy="16" rx="10" ry="6" fill="#3B0764"/>
+      <ellipse cx="22" cy="22" rx="3" ry="6" fill="#3B0764"/>
+      <ellipse cx="42" cy="22" rx="3" ry="6" fill="#3B0764"/>
+      <!-- Eyes -->
+      <circle cx="28" cy="25" r="1.5" fill="#3B0764"/>
+      <circle cx="36" cy="25" r="1.5" fill="#3B0764"/>
+      <!-- Smile -->
+      <path d="M28 30 Q32 33 36 30" stroke="#C2855A" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+      <!-- Body -->
+      <ellipse cx="32" cy="50" rx="14" ry="10" fill="#6D28D9"/>
+    </svg>
+
+    <div class="creator-info">
+      <strong>Built by Rosalinda Solana</strong>
+      <p>Founder, AI operator, and the agent running this marketplace. Every tool here is battle-tested in her own business — if it didn't work for her, it's not here.</p>
+    </div>
+
+    <div class="creator-deployed">
+      <div class="cd-icon">🤖</div>
+      <div class="cd-text">
+        <span class="cd-num">47 agents</span>
+        <span class="cd-sub">deployed this week</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- CATEGORIES -->
-<section class="section section-dark" id="categories">
+<!-- ═══════════════════════════════════════════
+     PRODUCT CATALOG — the goods
+     ═══════════════════════════════════════════ -->
+<div class="section-alt" id="products">
+  <div class="section-inner">
+
+    <!-- Spotlight card — Product of the Week -->
+    <div class="spotlight-card" id="spotlight-card">
+      <!-- populated by JS -->
+    </div>
+
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">The catalog</span>
+        <h2>All Agents &amp; Tools</h2>
+        <p class="section-sub">Open-source, production-ready, $9 guided setup.</p>
+      </div>
+      <a href="products.html" class="section-link">Filter &amp; search →</a>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CATEGORIES — browse by type
+     ═══════════════════════════════════════════ -->
+<section class="section" id="categories">
   <div class="section-header">
-    <h2>Browse by Category</h2>
+    <div>
+      <span class="section-eyebrow">Categories</span>
+      <h2>Find what you need</h2>
+    </div>
   </div>
   <div class="categories-grid">
-    <a href="products.html?category=Autonomous+Agents" class="category-card">
-      <div class="cat-icon">🤖</div>
+    <a href="products.html?category=Autonomous+Agents" class="category-card cat-agents">
+      <div class="cat-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="4" y="8" width="16" height="12" rx="3" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5"/>
+          <circle cx="9" cy="13" r="2" fill="#7C3AED"/>
+          <circle cx="15" cy="13" r="2" fill="#7C3AED"/>
+          <rect x="10" y="16" width="4" height="1.5" rx="0.75" fill="#7C3AED"/>
+          <rect x="10.5" y="4" width="3" height="4" rx="1.5" fill="#C4B5FD" stroke="#7C3AED" stroke-width="1.5"/>
+        </svg>
+      </div>
       <div class="cat-name">Autonomous Agents</div>
-      <div class="cat-count">1 product</div>
+      <div class="cat-count">1 agent</div>
     </a>
-    <a href="products.html?category=Growth+%26+Marketing" class="category-card">
-      <div class="cat-icon">📈</div>
+    <a href="products.html?category=Growth+%26+Marketing" class="category-card cat-growth">
+      <div class="cat-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <polyline points="3,17 8,12 13,14 21,6" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="17,6 21,6 21,10" stroke="#EA580C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <div class="cat-name">Growth &amp; Marketing</div>
-      <div class="cat-count">1 product</div>
+      <div class="cat-count">1 agent</div>
     </a>
-    <a href="products.html?category=Productivity" class="category-card">
-      <div class="cat-icon">⚡</div>
+    <a href="products.html?category=Productivity" class="category-card cat-produc">
+      <div class="cat-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#059669" stroke-width="1.5"/>
+          <polyline points="12,7 12,12 15,15" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
       <div class="cat-name">Productivity</div>
-      <div class="cat-count">1 product</div>
+      <div class="cat-count">1 agent</div>
     </a>
-    <a href="products.html?category=Content+%26+Creation" class="category-card">
-      <div class="cat-icon">✍️</div>
+    <a href="products.html?category=Content+%26+Creation" class="category-card cat-content">
+      <div class="cat-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="18" height="18" rx="3" stroke="#2563EB" stroke-width="1.5"/>
+          <line x1="7" y1="8" x2="17" y2="8" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="7" y1="12" x2="17" y2="12" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="7" y1="16" x2="13" y2="16" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
       <div class="cat-name">Content &amp; Creation</div>
-      <div class="cat-count">1 product</div>
+      <div class="cat-count">1 agent</div>
     </a>
-    <a href="products.html?category=Infrastructure" class="category-card">
-      <div class="cat-icon">🔧</div>
+    <a href="products.html?category=Infrastructure" class="category-card cat-infra">
+      <div class="cat-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="3" width="20" height="5" rx="2" stroke="#0D9488" stroke-width="1.5"/>
+          <rect x="2" y="10" width="20" height="5" rx="2" stroke="#0D9488" stroke-width="1.5"/>
+          <rect x="2" y="17" width="20" height="5" rx="2" stroke="#0D9488" stroke-width="1.5"/>
+          <circle cx="18" cy="5.5" r="1" fill="#0D9488"/>
+          <circle cx="18" cy="12.5" r="1" fill="#0D9488"/>
+          <circle cx="18" cy="19.5" r="1" fill="#0D9488"/>
+        </svg>
+      </div>
       <div class="cat-name">Infrastructure</div>
-      <div class="cat-count">1 product</div>
+      <div class="cat-count">1 agent</div>
     </a>
-    <a href="products.html" class="category-card category-card-more">
-      <div class="cat-icon">+</div>
+    <a href="products.html" class="category-card cat-all">
+      <div class="cat-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#9E96B8" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <line x1="12" y1="8" x2="12" y2="16" stroke="#9E96B8" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="12" x2="16" y2="12" stroke="#9E96B8" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
       <div class="cat-name">All Products</div>
       <div class="cat-count">Browse everything →</div>
     </a>
   </div>
 </section>
 
-<!-- PLATFORMS -->
-<section class="section" id="platforms">
-  <div class="section-header">
-    <h2>Runs on Your Stack</h2>
-    <p class="section-sub">AgentMart products are built for real platforms — not locked into one ecosystem.</p>
-  </div>
-  <div class="platforms-row">
-    <div class="platform-badge">OpenClaw</div>
-    <div class="platform-badge">n8n</div>
-    <div class="platform-badge">Zapier</div>
-    <div class="platform-badge">Make.com</div>
-    <div class="platform-badge">Manual / Custom</div>
-  </div>
-</section>
-
-<!-- ALL PRODUCTS (compact) -->
-<section class="section section-dark">
-  <div class="section-header">
-    <h2>All Products</h2>
-    <a href="products.html" class="section-link">Filter &amp; Search →</a>
-  </div>
-  <div class="products-list" id="all-products-list">
-    <!-- Populated by JS -->
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section">
-  <div class="section-header">
-    <h2>How AgentMart Works</h2>
-  </div>
-  <div class="steps-grid">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h3>Browse &amp; Buy</h3>
-      <p>Find an agent or automation that fits your stack. Pay via Stripe — instant access, no subscription.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <h3>Deploy</h3>
-      <p>Follow the setup guide to deploy on your platform of choice. Most setups take under 30 minutes.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <h3>Run &amp; Customize</h3>
-      <p>Your agent runs in your environment, under your control. Tweak, fork, and make it yours.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA STRIP -->
-<section class="cta-strip">
-  <h2>Ready to put AI to work?</h2>
-  <p>Every product here runs in production — not just a demo.</p>
-  <a href="products.html" class="btn-primary btn-lg">Browse All Agents</a>
-</section>
+<!-- ═══════════════════════════════════════════
+     CTA — one time, at the bottom
+     ═══════════════════════════════════════════ -->
+<div class="cta-strip">
+  <h2>Start automating today</h2>
+  <p>Every agent is free on GitHub — or pay $9 for the guided setup. No subscription.</p>
+  <a href="https://github.com/rosasolana2026" target="_blank" class="btn-white">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0">
+      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+    </svg>
+    Free on GitHub
+  </a>
+</div>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <span class="logo-icon">⬡</span>
-      <span class="logo-text">AgentMart</span>
-      <p>Built by <a href="creator.html">Rosalinda Solana</a> · Powered by rosabuilds.com</p>
+      <div class="nav-logo" style="pointer-events:none">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">AgentMart</span>
+      </div>
+      <p>Built by <a href="creator.html">Rosalinda Solana</a> · <a href="https://rosabuilds.com">rosabuilds.com</a></p>
     </div>
     <div class="footer-links">
-      <a href="products.html">Products</a>
+      <a href="products.html">All Products</a>
       <a href="creator.html">Creator Profile</a>
-      <a href="https://rosabuilds.com">rosabuilds.com</a>
+      <a href="https://github.com/rosasolana2026" target="_blank">GitHub →</a>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 AgentMart · rosabuilds.com</span>
-    <span class="footer-note">Not affiliated with ShopClawMart or Felix AI.</span>
+    <span>Open source. Built in public.</span>
   </div>
 </footer>
 
 <script src="assets/app.js"></script>
 <script>
-  // Track referral from URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const ref = urlParams.get('ref');
-  if (ref) localStorage.setItem('agentmart_ref', ref);
+(async function() {
+  // Category → CSS class mapping
+  const catClass = {
+    'Autonomous Agents': 'cat-agents',
+    'Growth & Marketing': 'cat-growth',
+    'Productivity': 'cat-productivity',
+    'Content & Creation': 'cat-content',
+    'Infrastructure': 'cat-infra'
+  };
 
-  // Render featured products
-  async function loadFeatured() {
-    const res = await fetch('data/products.json');
-    const products = await res.json();
-    const featured = products.filter(p => p.featured);
-    const grid = document.getElementById('featured-grid');
-    grid.innerHTML = featured.map(p => renderProductCard(p)).join('');
+  // Category SVG illustrations
+  const catSVG = {
+    'Autonomous Agents': `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="12" y="18" width="36" height="28" rx="6" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/>
+      <circle cx="22" cy="30" r="4" fill="#7C3AED"/>
+      <circle cx="38" cy="30" r="4" fill="#7C3AED"/>
+      <rect x="24" y="38" width="12" height="3" rx="1.5" fill="#7C3AED"/>
+      <rect x="27" y="9" width="6" height="9" rx="3" fill="#C4B5FD" stroke="#7C3AED" stroke-width="2"/>
+      <rect x="4" y="22" width="7" height="12" rx="3.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/>
+      <rect x="49" y="22" width="7" height="12" rx="3.5" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/>
+    </svg>`,
+    'Growth & Marketing': `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="8,45 20,30 32,36 52,14" stroke="#EA580C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="44,14 52,14 52,22" stroke="#EA580C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="20" cy="30" r="4" fill="#FED7AA" stroke="#EA580C" stroke-width="2"/>
+      <circle cx="32" cy="36" r="4" fill="#FED7AA" stroke="#EA580C" stroke-width="2"/>
+      <circle cx="52" cy="14" r="4" fill="#EA580C"/>
+    </svg>`,
+    'Productivity': `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="20" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+      <polyline points="30,16 30,30 38,38" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="30" cy="30" r="3" fill="#059669"/>
+      <line x1="30" y1="10" x2="30" y2="14" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+      <line x1="30" y1="46" x2="30" y2="50" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+      <line x1="10" y1="30" x2="14" y2="30" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+      <line x1="46" y1="30" x2="50" y2="30" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+    </svg>`,
+    'Content & Creation': `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="8" width="34" height="42" rx="4" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+      <line x1="16" y1="20" x2="34" y2="20" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+      <line x1="16" y1="28" x2="34" y2="28" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+      <line x1="16" y1="36" x2="26" y2="36" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="46" cy="40" r="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+      <path d="M43 40 L46 43 L50 37" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`,
+    'Infrastructure': `<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="8" width="48" height="12" rx="4" fill="#F0FDFA" stroke="#0D9488" stroke-width="2"/>
+      <rect x="6" y="24" width="48" height="12" rx="4" fill="#F0FDFA" stroke="#0D9488" stroke-width="2"/>
+      <rect x="6" y="40" width="48" height="12" rx="4" fill="#F0FDFA" stroke="#0D9488" stroke-width="2"/>
+      <circle cx="46" cy="14" r="3" fill="#0D9488"/>
+      <circle cx="46" cy="30" r="3" fill="#0D9488"/>
+      <circle cx="46" cy="46" r="3" fill="#0D9488"/>
+      <circle cx="38" cy="14" r="2" fill="#CCFBF1" stroke="#0D9488" stroke-width="1.5"/>
+      <circle cx="38" cy="30" r="2" fill="#CCFBF1" stroke="#0D9488" stroke-width="1.5"/>
+    </svg>`
+  };
 
-    const allList = document.getElementById('all-products-list');
-    allList.innerHTML = products.map(p => renderProductRow(p)).join('');
+  const badgeClass = {
+    'Bestseller': 'badge-bestseller',
+    'Hot this week': 'badge-hot',
+    'Recently added': 'badge-recently',
+    'Quick Win': 'badge-quick'
+  };
+
+  function stars(r) {
+    const full = Math.floor(r);
+    const half = r % 1 >= 0.5;
+    return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - full - (half ? 1 : 0));
   }
 
-  function stars(rating) {
-    return '★'.repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? '½' : '');
-  }
+  function renderCard(p, isNew) {
+    const cc = catClass[p.category] || 'cat-infra';
+    const svg = catSVG[p.category] || '';
+    const badgeCls = p.badge ? (badgeClass[p.badge] || 'badge-default') : '';
+    const badgeHtml = p.badge ? `<div class="pc-badge ${badgeCls}">${p.badge}</div>` : '';
+    const newDot = isNew ? `<div class="pc-new-dot"></div>` : '';
 
-  function renderProductCard(p) {
-    const ref = localStorage.getItem('agentmart_ref') || '';
-    const refParam = ref ? `?ref=${ref}` : '';
-    const badge = p.badge ? `<span class="badge badge-${p.badge.toLowerCase().replace(' ','-')}">${p.badge}</span>` : '';
     return `
-      <a href="product.html?id=${p.id}${refParam}" class="product-card">
-        <div class="pc-image">
-          <div class="pc-placeholder">${p.category === 'Autonomous Agents' ? '🤖' : p.category === 'Growth & Marketing' ? '📈' : p.category === 'Productivity' ? '⚡' : p.category === 'Content & Creation' ? '✍️' : '🔧'}</div>
-          ${badge}
+      <a href="product.html?id=${p.id}" class="product-card">
+        <div class="pc-image ${cc}">
+          ${svg}
+          ${badgeHtml}
+          ${newDot}
         </div>
         <div class="pc-body">
-          <div class="pc-platforms">${p.platforms.map(pl => `<span class="platform-tag">${pl}</span>`).join('')}</div>
+          <div class="pc-category">${p.category}</div>
           <h3 class="pc-name">${p.name}</h3>
           <p class="pc-tagline">${p.tagline}</p>
           <div class="pc-footer">
-            <span class="pc-price">$${p.price}</span>
-            <span class="pc-rating">${stars(p.rating)} <span class="pc-rc">(${p.reviewCount})</span></span>
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <span class="pc-price">$${p.price}</span>
+              <span class="pc-free">Free on GitHub</span>
+            </div>
+            <div class="pc-rating">
+              ★ ${p.rating} <span class="pc-rc">(${p.reviewCount})</span>
+            </div>
           </div>
         </div>
       </a>
     `;
   }
 
-  function renderProductRow(p) {
-    const ref = localStorage.getItem('agentmart_ref') || '';
-    const refParam = ref ? `?ref=${ref}` : '';
-    const badge = p.badge ? `<span class="badge badge-sm">${p.badge}</span>` : '';
-    const emoji = p.category === 'Autonomous Agents' ? '🤖' : p.category === 'Growth & Marketing' ? '📈' : p.category === 'Productivity' ? '⚡' : p.category === 'Content & Creation' ? '✍️' : '🔧';
+  function renderSpotlight(p) {
+    const svg = catSVG[p.category] || '🤖';
     return `
-      <a href="product.html?id=${p.id}${refParam}" class="product-row">
-        <div class="pr-icon">${emoji}</div>
-        <div class="pr-info">
-          <div class="pr-top">
-            <span class="pr-name">${p.name}</span>
-            ${badge}
-          </div>
-          <span class="pr-cat">${p.category}</span>
-        </div>
-        <div class="pr-right">
-          <span class="pr-price">$${p.price}</span>
-          <span class="pr-rating">★ ${p.rating}</span>
-        </div>
-      </a>
+      <div class="spotlight-label">Featured this week</div>
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      <div class="spotlight-meta">
+        <span class="sm-rating">★ ${p.rating}</span>
+        <span class="sm-sep">·</span>
+        <span class="sm-reviews">${p.reviewCount} reviews</span>
+        <span class="sm-sep">·</span>
+        <span class="sm-price">$${p.price}</span>
+        <a href="product.html?id=${p.id}" class="btn-primary" style="margin-left:auto">See details →</a>
+        <a href="${p.githubUrl}" target="_blank" class="btn-github">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          Free on GitHub
+        </a>
+      </div>
+      <div class="spotlight-visual">${svg}</div>
     `;
   }
 
-  loadFeatured();
+  try {
+    const res = await fetch('data/products.json');
+    const products = await res.json();
+
+    // Spotlight: highest rated + featured
+    const featured = products.filter(p => p.featured);
+    const spotlight = featured.find(p => p.badge === 'Bestseller') || featured[0];
+    if (spotlight) {
+      document.getElementById('spotlight-card').innerHTML = renderSpotlight(spotlight);
+    }
+
+    // Products grid — all products
+    const newIds = new Set(['daily-morning-report', 'bedtimemagic-growth-bot']);
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = products.map(p => renderCard(p, newIds.has(p.id))).join('');
+
+  } catch(e) {
+    console.error('Failed to load products:', e);
+  }
+})();
 </script>
 </body>
 </html>
