@@ -206,11 +206,61 @@
         <!-- Right: Purchase Sidebar -->
         <div class="product-sidebar">
           <div class="sidebar-card sticky-sidebar">
+
+            ${product.freeDownload && product.githubUrl ? `
+            <!-- Free Download -->
+            <div class="sb-free-badge">🎁 Free Workspace Download</div>
+            <a href="${product.githubUrl}" class="btn-free btn-full" target="_blank" rel="noopener">
+              ⬇ Free Download — GitHub
+            </a>
+            <p class="sb-free-note">Drop into <code>~/.openclaw/workspace</code> and go. Setup: ${product.setupTime || '~10 minutes'}.</p>
+
+            ${product.deliveryItems && product.deliveryItems.length ? `
+            <div class="sb-delivery">
+              <div class="sb-delivery-label">What's included:</div>
+              <ul class="sb-delivery-list">
+                ${product.deliveryItems.map(item => `<li>✓ ${item}</li>`).join('')}
+              </ul>
+            </div>
+            ` : ''}
+
+            <div class="sb-divider"></div>
+
+            <!-- Managed Options Toggle -->
+            <div class="sb-managed-section">
+              <div class="sb-managed-label">Want it running without the setup?</div>
+              <div class="sb-tier-toggle">
+                <button class="sb-tier-btn active" onclick="selectTier(this, 'self')" data-tier="self">
+                  <span class="sb-tier-price">$9</span>
+                  <span class="sb-tier-name">Self-Hosted Bundle</span>
+                  <span class="sb-tier-desc">We guide you through setup</span>
+                </button>
+                <button class="sb-tier-btn" onclick="selectTier(this, 'managed')" data-tier="managed">
+                  <span class="sb-tier-price">$29</span>
+                  <span class="sb-tier-name">Managed</span>
+                  <span class="sb-tier-desc">We deploy it for you</span>
+                </button>
+              </div>
+              <div id="tier-action-self">
+                <a href="${buyUrl}" class="btn-primary btn-full btn-buy" target="_blank" rel="noopener">
+                  Get Self-Hosted Bundle — $9
+                </a>
+              </div>
+              <div id="tier-action-managed" style="display:none">
+                <a href="https://buy.stripe.com/managed-29?product=${productId}" class="btn-primary btn-full btn-buy btn-managed" target="_blank" rel="noopener">
+                  Get Managed Deploy — $29
+                </a>
+                <p class="sb-managed-note">We set up OpenClaw, configure your API keys, and deploy. Delivered in 24h.</p>
+              </div>
+            </div>
+            ` : `
             <div class="sb-price">$${product.price}</div>
             <div class="sb-price-note">One-time purchase · Instant access</div>
             <a href="${buyUrl}" class="btn-primary btn-full btn-buy" target="_blank" rel="noopener">
               Buy Now — $${product.price}
             </a>
+            `}
+
             <div class="sb-guarantee">
               <span class="sb-g-icon">🛡</span>
               <span>Satisfaction guaranteed. Reach out if it doesn't work for you.</span>
@@ -219,7 +269,7 @@
             <div class="sb-details">
               <div class="sb-row"><span>Category</span><span>${product.category}</span></div>
               <div class="sb-row"><span>Platforms</span><span>${product.platforms.join(', ')}</span></div>
-              <div class="sb-row"><span>Delivery</span><span>Instant download</span></div>
+              <div class="sb-row"><span>Setup Time</span><span>${product.setupTime || 'Instant download'}</span></div>
               <div class="sb-row"><span>License</span><span>Single operator</span></div>
             </div>
             <div class="sb-divider"></div>
@@ -245,6 +295,13 @@
       btn.textContent = 'Copied!';
       setTimeout(() => btn.textContent = 'Copy', 2000);
     });
+  }
+
+  function selectTier(btn, tier) {
+    document.querySelectorAll('.sb-tier-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tier-action-self').style.display = tier === 'self' ? '' : 'none';
+    document.getElementById('tier-action-managed').style.display = tier === 'managed' ? '' : 'none';
   }
 
   init();
