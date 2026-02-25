@@ -4,202 +4,183 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>You're Confirmed — OpenClaw Setup | rosabuilds</title>
-  <meta name="description" content="Your OpenClaw Setup session is confirmed. Rosalinda will guide you through setup right here.">
+  <meta name="description" content="Your OpenClaw Setup session is confirmed. Follow these steps to get started.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cream:      #faf6f1;
-      --white:      #ffffff;
-      --parchment:  #f2ece4;
-      --border:     #e8ddd4;
-      --text:       #1c1410;
-      --muted:      #7a6a5e;
-      --faint:      #b0a49a;
-      --rose:       #9b3060;
-      --rose2:      #c2476e;
-      --blush:      #f3d9e3;
-      --mauve:      #7b4f6e;
-      --gold:       #b08d57;
-      --sage:       #5a7a5e;
-      --green:      #16a34a;
-      --greenlight: #f0fdf4;
-      --greenborder: #bbf7d0;
+      --bg:       #0a0a0a;
+      --bg2:      #111;
+      --bg3:      #1a1a1a;
+      --bg4:      #151515;
+      --border:   #222;
+      --border2:  #333;
+      --text:     #f0ede6;
+      --muted:    #888;
+      --faint:    #555;
+      --accent:   #c9184a;
+      --accent2:  #ff4d6d;
+      --green:    #22c55e;
+      --green-bg: rgba(34,197,94,0.1);
+      --green-bd: rgba(34,197,94,0.25);
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--cream); color: var(--text); font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Inter', sans-serif; font-weight: 300;
+      line-height: 1.7; min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
     a { color: inherit; text-decoration: none; }
 
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(250,246,241,0.96); backdrop-filter: blur(16px);
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 0 2rem; height: 58px;
+      padding: 0 2rem; height: 56px;
       display: flex; align-items: center; justify-content: space-between;
       flex-shrink: 0;
     }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem; font-style: italic; letter-spacing: 0.01em;
-      color: var(--text);
-    }
-    .nav-logo em { color: var(--rose); font-style: italic; }
-    .nav-links {
-      display: flex; gap: 2rem; align-items: center;
-      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted);
-    }
-    .nav-links a:hover { color: var(--rose); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .nav-links a:hover { color: var(--text); }
 
-    /* ── CHAT CONTAINER ── */
-    .chat-container {
-      flex: 1; max-width: 680px; width: 100%;
-      margin: 0 auto; padding: 1.5rem 1.25rem 2rem;
-      display: flex; flex-direction: column;
-      overflow-y: auto;
+    /* ── MAIN CONTAINER ── */
+    .main {
+      flex: 1; max-width: 640px; width: 100%;
+      margin: 0 auto; padding: 2rem 1.5rem 3rem;
     }
 
-    /* ── MESSAGE BUBBLES ── */
-    .msg-row {
-      display: flex; align-items: flex-start; gap: 0.65rem;
-      margin-bottom: 1rem;
-      opacity: 0; transform: translateY(8px);
-      animation: msgIn 0.35s ease forwards;
+    /* ── STEP CARDS ── */
+    .step-card {
+      margin-bottom: 1.5rem;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    @keyframes msgIn {
-      to { opacity: 1; transform: translateY(0); }
+    .step-card.visible {
+      opacity: 1; transform: translateY(0);
     }
-    .avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: var(--rose); color: white;
+    .step-card.completed .step-header .step-num {
+      background: var(--green); color: #fff;
+    }
+
+    .step-header {
+      display: flex; align-items: center; gap: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-size: 0.85rem; font-weight: 600;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem; font-weight: 600; font-style: italic;
-      flex-shrink: 0; margin-top: 2px;
+      flex-shrink: 0;
+      transition: background 0.3s;
     }
+    .step-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+    }
+
+    .step-body {
+      margin-left: 52px;
+    }
+    .step-body p {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.75;
+      margin-bottom: 0.6rem;
+    }
+    .step-body p:last-child { margin-bottom: 0; }
+    .step-body strong { color: var(--text); font-weight: 500; }
+
+    /* ── BUBBLES (chat-like messages inside steps) ── */
     .bubble {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 0 14px 14px 14px;
-      padding: 0.9rem 1.1rem;
-      max-width: 520px;
-      font-size: 0.9rem; line-height: 1.7;
-      color: var(--text);
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 2px 12px 12px 12px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.88rem; line-height: 1.7;
     }
-    .bubble p { margin-bottom: 0.5rem; }
+    .bubble p { color: var(--muted); margin-bottom: 0.5rem; }
     .bubble p:last-child { margin-bottom: 0; }
-
-    /* ── TYPING INDICATOR ── */
-    .typing-row {
-      display: flex; align-items: flex-start; gap: 0.65rem;
-      margin-bottom: 1rem;
-    }
-    .typing-dots {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 0 14px 14px 14px;
-      padding: 0.85rem 1.2rem;
-      display: flex; gap: 5px; align-items: center;
-    }
-    .typing-dots span {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--faint);
-      animation: bounce 1.2s infinite;
-    }
-    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
-    .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
-    @keyframes bounce {
-      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-      30% { transform: translateY(-5px); opacity: 1; }
-    }
-
-    /* ── CHOICE BUTTONS ── */
-    .choice-row {
-      display: flex; gap: 0.6rem; flex-wrap: wrap;
-      margin-bottom: 1rem; padding-left: 44px;
-      opacity: 0; transform: translateY(8px);
-      animation: msgIn 0.35s ease forwards;
-    }
-    .choice-btn {
-      background: var(--white); color: var(--rose);
-      border: 1.5px solid var(--rose);
-      border-radius: 100px;
-      padding: 0.55rem 1.5rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem; font-weight: 500;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .choice-btn:hover { background: var(--rose); color: white; }
-    .choice-btn.selected {
-      background: var(--rose); color: white;
-      cursor: default; pointer-events: none;
-    }
 
     /* ── DOWNLOAD BUTTON ── */
     .dl-btn {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      margin-top: 0.75rem;
-      background: var(--rose); color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 6px;
-      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em;
+      margin-top: 0.5rem; margin-bottom: 0.5rem;
+      background: var(--accent); color: white;
+      padding: 0.75rem 1.6rem;
+      border-radius: 2px;
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase;
       transition: background 0.2s, transform 0.15s;
     }
-    .dl-btn:hover { background: var(--rose2); transform: translateY(-1px); }
+    .dl-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    /* ── INSTRUCTION LIST ── */
+    .inst-list {
+      list-style: none; margin: 0.75rem 0;
+    }
+    .inst-list li {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.7;
+      padding: 0.35rem 0 0.35rem 1.6rem;
+      position: relative;
+    }
+    .inst-list li::before {
+      content: ''; position: absolute;
+      left: 0; top: 0.75rem;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+    }
 
     /* ── CSS MOCKUPS ── */
     .mockup {
-      margin-top: 0.75rem; border-radius: 8px;
+      margin: 0.75rem 0; border-radius: 6px;
       overflow: hidden; border: 1px solid var(--border);
-      font-size: 0.8rem;
     }
 
     /* Finder row */
     .mockup-finder {
-      background: var(--white); padding: 0.6rem 0.75rem;
-      display: flex; align-items: center; gap: 0.6rem;
+      background: var(--bg3); padding: 0.7rem 0.85rem;
+      display: flex; align-items: center; gap: 0.7rem;
     }
     .mockup-finder .icon-box {
-      width: 36px; height: 36px; border-radius: 8px;
+      width: 38px; height: 38px; border-radius: 8px;
       background: #d93425; display: flex; align-items: center; justify-content: center;
       color: white; font-weight: 700; font-size: 0.7rem;
     }
-    .mockup-finder .file-info { flex: 1; }
-    .mockup-finder .fname { font-weight: 500; color: var(--text); font-size: 0.82rem; }
+    .mockup-finder .fname { font-weight: 500; font-size: 0.82rem; }
     .mockup-finder .fmeta { font-size: 0.7rem; color: var(--faint); }
 
     /* DMG installer */
     .mockup-dmg {
-      background: #f5f5f5; padding: 1.5rem; text-align: center;
+      background: var(--bg3); padding: 1.5rem; text-align: center;
     }
     .mockup-dmg-inner {
-      display: flex; align-items: center; justify-content: center; gap: 1.2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem;
     }
     .mockup-dmg .app-icon {
       width: 56px; height: 56px; border-radius: 12px;
       background: #d93425; display: flex; align-items: center; justify-content: center;
       color: white; font-weight: 700; font-size: 0.75rem;
     }
-    .mockup-dmg .arrow {
-      font-size: 1.8rem; color: var(--faint);
-    }
+    .mockup-dmg .arrow { font-size: 1.8rem; color: var(--faint); }
     .mockup-dmg .folder-icon {
       width: 56px; height: 56px; border-radius: 12px;
       background: #5aa0f5; display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 0.65rem; font-weight: 600; text-align: center; line-height: 1.1;
+      color: white; font-size: 0.6rem; font-weight: 600; text-align: center; line-height: 1.1;
     }
     .mockup-dmg .labels {
-      display: flex; justify-content: center; gap: 2.2rem;
+      display: flex; justify-content: center; gap: 3rem;
       margin-top: 0.5rem; font-size: 0.7rem; color: var(--muted);
     }
 
     /* Launchpad grid */
     .mockup-launchpad {
-      background: linear-gradient(135deg, #2c2c3a 0%, #1a1a2e 100%);
+      background: linear-gradient(135deg, #1a1a2e, #0f0f1a);
       padding: 1.2rem; display: grid;
       grid-template-columns: repeat(4, 1fr); gap: 0.8rem;
     }
@@ -207,103 +188,64 @@
       display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
     }
     .lp-icon .lp-box {
-      width: 40px; height: 40px; border-radius: 10px;
+      width: 42px; height: 42px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       font-size: 0.6rem; font-weight: 600; color: white;
     }
-    .lp-icon .lp-label { font-size: 0.6rem; color: rgba(255,255,255,0.7); }
-    .lp-icon.highlight .lp-box { box-shadow: 0 0 0 2px #fff, 0 0 8px rgba(255,255,255,0.5); }
+    .lp-icon .lp-label { font-size: 0.6rem; color: rgba(255,255,255,0.5); }
+    .lp-icon.highlight .lp-box {
+      box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(201,24,74,0.4);
+    }
 
     /* macOS dialog */
     .mockup-dialog {
-      background: #f0f0f0; border-radius: 10px;
-      overflow: hidden; margin-top: 0.75rem; border: 1px solid #ccc;
+      background: var(--bg3); border-radius: 8px;
+      overflow: hidden; margin: 0.75rem 0; border: 1px solid var(--border);
     }
     .dialog-bar {
-      background: #e0e0e0; padding: 0.4rem 0.75rem;
+      background: var(--bg4); padding: 0.4rem 0.75rem;
       display: flex; align-items: center; gap: 0.35rem;
     }
     .dialog-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dialog-body {
-      padding: 1.25rem; text-align: center;
-    }
-    .dialog-body p { font-size: 0.8rem; color: #333; margin-bottom: 0.8rem; line-height: 1.5; }
+    .dialog-body { padding: 1.25rem; text-align: center; }
+    .dialog-body p { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.8rem; line-height: 1.5; }
     .dialog-btns { display: flex; justify-content: center; gap: 0.6rem; }
     .dialog-btn {
       padding: 0.35rem 1.1rem; border-radius: 5px;
       font-size: 0.75rem; font-weight: 500;
-      border: 1px solid #bbb; background: #fff; color: #333;
+      border: 1px solid var(--border2); background: var(--bg2); color: var(--muted);
     }
     .dialog-btn.primary { background: #007aff; color: white; border-color: #007aff; }
 
-    /* Permission dialog */
+    /* Permission toggles */
     .mockup-perms {
-      background: #f0f0f0; border-radius: 10px;
-      overflow: hidden; margin-top: 0.75rem; border: 1px solid #ccc;
+      background: var(--bg3); border-radius: 8px;
+      overflow: hidden; margin: 0.75rem 0; border: 1px solid var(--border);
     }
-    .perms-body { padding: 1.25rem; }
+    .perms-body { padding: 1rem 1.25rem; }
     .perm-item {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0.5rem 0; border-bottom: 1px solid #ddd;
+      padding: 0.55rem 0; border-bottom: 1px solid var(--border);
     }
     .perm-item:last-child { border-bottom: none; }
-    .perm-label { font-size: 0.8rem; color: #333; }
+    .perm-label { font-size: 0.82rem; color: var(--text); }
     .perm-toggle {
-      width: 36px; height: 20px; border-radius: 10px;
-      background: #ccc; position: relative;
+      width: 38px; height: 22px; border-radius: 11px;
+      background: var(--faint); position: relative;
     }
-    .perm-toggle.on { background: #34c759; }
+    .perm-toggle.on { background: var(--green); }
     .perm-toggle::after {
       content: ''; position: absolute;
-      width: 16px; height: 16px; border-radius: 50%;
+      width: 18px; height: 18px; border-radius: 50%;
       background: white; top: 2px; left: 2px;
       transition: left 0.2s;
     }
     .perm-toggle.on::after { left: 18px; }
 
-    /* Windows Explorer row */
-    .mockup-winexplorer {
-      background: #fff; padding: 0.6rem 0.75rem;
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-    .win-icon {
-      width: 36px; height: 36px; border-radius: 4px;
-      background: #d93425; display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 700; font-size: 0.55rem;
-    }
-    .win-fname { font-weight: 500; color: var(--text); font-size: 0.82rem; }
-    .win-fmeta { font-size: 0.7rem; color: var(--faint); }
-
-    /* UAC dialog */
-    .mockup-uac {
-      background: #001a3a; border-radius: 8px;
-      overflow: hidden; margin-top: 0.75rem;
-      border: 1px solid #003366;
-    }
-    .uac-header {
-      background: #002855; padding: 0.75rem 1rem;
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-    .uac-shield {
-      width: 28px; height: 28px; border-radius: 4px;
-      background: #ffc107; display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-    }
-    .uac-header-text { color: white; font-size: 0.8rem; font-weight: 500; }
-    .uac-body { padding: 1rem; text-align: center; }
-    .uac-body p { color: #b0c4de; font-size: 0.78rem; margin-bottom: 0.8rem; }
-    .uac-btns { display: flex; justify-content: center; gap: 0.5rem; }
-    .uac-btn {
-      padding: 0.35rem 1.5rem; border-radius: 3px;
-      font-size: 0.75rem; font-weight: 500;
-      border: 1px solid #556; background: #334; color: #ccc;
-    }
-    .uac-btn.yes { background: #0078d4; color: white; border-color: #0078d4; }
-
     /* AnyDesk window */
     .mockup-anydesk {
-      border-radius: 10px; overflow: hidden;
-      margin-top: 0.75rem; border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+      margin: 0.75rem 0; border: 1px solid var(--border);
     }
     .ad-header {
       background: #d93425; padding: 0.8rem 1rem;
@@ -311,375 +253,388 @@
     }
     .ad-logo { color: white; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.03em; }
     .ad-dots { display: flex; gap: 5px; }
-    .ad-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.35); }
-    .ad-body {
-      background: #fff; padding: 1.5rem; text-align: center;
+    .ad-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+    .ad-body { background: var(--bg3); padding: 1.5rem; text-align: center; }
+    .ad-label {
+      font-size: 0.7rem; color: var(--faint); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
     }
-    .ad-label { font-size: 0.7rem; color: var(--faint); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
     .ad-id {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem; font-weight: 600; color: var(--text);
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--text);
       letter-spacing: 0.12em; margin-bottom: 0.6rem;
     }
-    .ad-warning {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-size: 0.72rem; color: #b08d00;
-      background: #fff9e6; padding: 0.3rem 0.7rem; border-radius: 4px;
+    .ad-arrow {
+      display: inline-block; margin-top: 0.3rem;
+      font-size: 0.75rem; color: var(--accent);
+      background: rgba(201,24,74,0.15); padding: 0.25rem 0.75rem;
+      border-radius: 2px; border: 1px solid rgba(201,24,74,0.3);
     }
 
-    /* ── INLINE FORM ── */
-    .form-card {
-      background: var(--white); border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.25rem;
-      margin-top: 0.5rem;
+    /* ── ID INPUT FORM ── */
+    .id-form {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 2px; padding: 1.25rem;
+      margin-top: 0.75rem;
     }
-    .form-card label {
-      display: block; font-size: 0.75rem; font-weight: 500;
-      color: var(--muted); letter-spacing: 0.06em;
-      text-transform: uppercase; margin-bottom: 0.3rem;
-      margin-top: 0.9rem;
+    .id-form label {
+      display: block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.4rem;
     }
-    .form-card label:first-child { margin-top: 0; }
-    .form-card input[type="text"],
-    .form-card input[type="number"] {
-      width: 100%; padding: 0.65rem 0.85rem;
-      border: 1px solid var(--border); border-radius: 8px;
-      font-family: 'Inter', sans-serif; font-size: 0.88rem;
-      color: var(--text); background: var(--cream);
+    .id-form input {
+      width: 100%; padding: 0.7rem 0.85rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 2px; color: var(--text);
+      font-family: 'Inter', sans-serif; font-size: 1.1rem;
+      font-weight: 500; letter-spacing: 0.08em;
       outline: none; transition: border-color 0.2s;
     }
-    .form-card input:focus { border-color: var(--rose); }
-    .form-card .hint {
-      font-size: 0.7rem; color: var(--faint); margin-top: 0.2rem;
+    .id-form input::placeholder { color: var(--faint); font-weight: 300; }
+    .id-form input:focus { border-color: var(--accent); }
+    .id-form .hint {
+      font-size: 0.72rem; color: var(--faint); margin-top: 0.3rem;
     }
-    .form-submit {
+    .id-submit {
       display: block; width: 100%;
-      margin-top: 1.25rem; padding: 0.8rem;
-      background: var(--rose); color: white; border: none;
-      border-radius: 8px; font-family: 'Inter', sans-serif;
-      font-size: 0.88rem; font-weight: 500;
+      margin-top: 1rem; padding: 0.8rem;
+      background: var(--accent); color: white; border: none;
+      border-radius: 2px; font-family: 'Inter', sans-serif;
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em;
       cursor: pointer; transition: background 0.2s;
     }
-    .form-submit:hover { background: var(--rose2); }
+    .id-submit:hover { background: var(--accent2); }
+
+    /* ── CONFIRMATION BOX ── */
+    .confirm-box {
+      background: var(--green-bg);
+      border: 1px solid var(--green-bd);
+      border-radius: 2px;
+      padding: 1.25rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+    .confirm-box.show { display: block; }
+    .confirm-box .check {
+      font-size: 1.5rem; margin-bottom: 0.5rem;
+    }
+    .confirm-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--green); margin-bottom: 0.4rem;
+    }
+    .confirm-box p {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.7;
+    }
+
+    /* ── CONTACT FALLBACK ── */
+    .contact-box {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 2px; padding: 1.25rem;
+      margin-top: 0.5rem;
+    }
+    .contact-box p {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.7;
+    }
+    .contact-box a {
+      color: var(--accent); border-bottom: 1px solid rgba(201,24,74,0.3);
+    }
+    .contact-box a:hover { color: var(--accent2); }
+
+    /* ── NEXT BUTTON ── */
+    .next-btn {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.6rem 1.5rem;
+      background: var(--bg3); color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem; font-weight: 500;
+      cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+    }
+    .next-btn:hover { border-color: #444; transform: translateY(-1px); }
 
     /* ── FOOTER ── */
     footer {
-      padding: 2rem; text-align: center;
-      font-size: 0.72rem; color: var(--faint); letter-spacing: 0.06em;
       border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+      font-size: 0.75rem; color: var(--muted);
       flex-shrink: 0;
     }
-    footer em { color: var(--rose); font-style: normal; }
+    footer span { color: var(--accent); }
 
     /* ── MOBILE ── */
-    @media (max-width: 680px) {
+    @media (max-width: 640px) {
       nav { padding: 0 1.25rem; }
-      .nav-links { gap: 1.25rem; font-size: 0.65rem; }
-      .chat-container { padding: 1rem 0.75rem 1.5rem; }
-      .bubble { max-width: 92%; }
-      .choice-row { padding-left: 0; justify-content: center; }
+      .nav-links { gap: 1rem; font-size: 0.7rem; }
+      .main { padding: 1.5rem 1rem 2.5rem; }
+      .step-body { margin-left: 0; margin-top: 0.5rem; }
+      .step-header { flex-wrap: wrap; }
       .mockup-launchpad { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo">rosa<em>builds</em></a>
+  <a href="/" class="nav-logo">rosa<span>builds</span></a>
   <div class="nav-links">
     <a href="/openclaw-setup/">OpenClaw Setup</a>
+    <a href="/">Projects</a>
     <a href="https://iamrosalinda.com" target="_blank">Blog</a>
-    <a href="/marketplace/">AgentMart</a>
   </div>
 </nav>
 
-<!-- CHAT -->
-<div class="chat-container" id="chat"></div>
+<div class="main" id="main">
+
+  <!-- STEP 1: Welcome -->
+  <div class="step-card visible" id="step-1">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-title">Welcome &mdash; you're confirmed!</div>
+    </div>
+    <div class="step-body">
+      <div class="bubble">
+        <p><strong>Payment received.</strong> I'm Rosalinda &mdash; I'll personally set up OpenClaw on your computer.</p>
+        <p>Here's what happens next: you'll download a small app called AnyDesk, share your connection address with me, and I'll remote in and handle everything. The whole thing takes about 30 minutes.</p>
+        <p>Follow the steps below. They're designed for someone who's never done this before &mdash; just go one at a time.</p>
+      </div>
+      <button class="next-btn" onclick="completeStep(1)">Got it, let's go &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Download AnyDesk -->
+  <div class="step-card" id="step-2">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-title">Download AnyDesk</div>
+    </div>
+    <div class="step-body">
+      <p>AnyDesk is a free, safe remote desktop app. It lets me see your screen and set things up for you.</p>
+
+      <a href="https://anydesk.com/en/downloads/mac-os" target="_blank" class="dl-btn">&#8595; Download AnyDesk for Mac</a>
+
+      <p style="margin-top:1rem"><strong>After downloading:</strong></p>
+
+      <ul class="inst-list">
+        <li>Click the <strong>AnyDesk.dmg</strong> file in your Downloads folder</li>
+      </ul>
+
+      <div class="mockup">
+        <div class="mockup-finder">
+          <div class="icon-box">AD</div>
+          <div>
+            <div class="fname">AnyDesk.dmg</div>
+            <div class="fmeta">3.8 MB &middot; Today</div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="inst-list">
+        <li>Drag AnyDesk to the <strong>Applications</strong> folder</li>
+      </ul>
+
+      <div class="mockup">
+        <div class="mockup-dmg">
+          <div class="mockup-dmg-inner">
+            <div class="app-icon">AD</div>
+            <div class="arrow">&#10230;</div>
+            <div class="folder-icon">Appli-<br>cations</div>
+          </div>
+          <div class="labels">
+            <span>AnyDesk</span>
+            <span>Applications</span>
+          </div>
+        </div>
+      </div>
+
+      <ul class="inst-list">
+        <li>Open AnyDesk from <strong>Launchpad</strong> or your <strong>Applications</strong> folder</li>
+      </ul>
+
+      <div class="mockup">
+        <div class="mockup-launchpad">
+          <div class="lp-icon"><div class="lp-box" style="background:#007aff">&#9881;</div><div class="lp-label">Settings</div></div>
+          <div class="lp-icon"><div class="lp-box" style="background:#5856d6">&#9993;</div><div class="lp-label">Mail</div></div>
+          <div class="lp-icon highlight"><div class="lp-box" style="background:#d93425">AD</div><div class="lp-label">AnyDesk</div></div>
+          <div class="lp-icon"><div class="lp-box" style="background:#34c759">&#9742;</div><div class="lp-label">FaceTime</div></div>
+        </div>
+      </div>
+
+      <ul class="inst-list">
+        <li>Click <strong>Allow</strong> when macOS asks for permissions</li>
+      </ul>
+
+      <div class="mockup-dialog">
+        <div class="dialog-bar">
+          <div class="dialog-dot" style="background:#ff5f57"></div>
+          <div class="dialog-dot" style="background:#febc2e"></div>
+          <div class="dialog-dot" style="background:#28c840"></div>
+        </div>
+        <div class="dialog-body">
+          <p>&ldquo;AnyDesk&rdquo; is an app downloaded from the internet. Are you sure you want to open it?</p>
+          <div class="dialog-btns">
+            <div class="dialog-btn">Cancel</div>
+            <div class="dialog-btn primary">Open</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mockup-perms">
+        <div class="perms-body">
+          <div class="perm-item">
+            <span class="perm-label">Accessibility</span>
+            <div class="perm-toggle on"></div>
+          </div>
+          <div class="perm-item">
+            <span class="perm-label">Screen Recording</span>
+            <div class="perm-toggle on"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="next-btn" onclick="completeStep(2)">AnyDesk is installed &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Share your AnyDesk address -->
+  <div class="step-card" id="step-3">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-title">Share your AnyDesk address</div>
+    </div>
+    <div class="step-body">
+      <p>Open AnyDesk. You'll see a big number at the top &mdash; that's your <strong>AnyDesk Address</strong>. It looks like this:</p>
+
+      <div class="mockup-anydesk">
+        <div class="ad-header">
+          <span class="ad-logo">AnyDesk</span>
+          <div class="ad-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="ad-body">
+          <div class="ad-label">Your Address</div>
+          <div class="ad-id">123 456 789</div>
+          <div class="ad-arrow">&#8593; This is the number you need</div>
+        </div>
+      </div>
+
+      <div class="id-form" id="id-form">
+        <label for="anydesk-id">Your AnyDesk Address</label>
+        <input type="text" id="anydesk-id" placeholder="e.g. 123 456 789" inputmode="numeric" maxlength="15" autocomplete="off">
+        <div class="hint">The 9-digit number at the top of your AnyDesk window</div>
+        <button class="id-submit" id="id-submit">Send to Rosalinda &#10148;</button>
+      </div>
+
+      <div class="confirm-box" id="confirm-box">
+        <div class="check">&#9989;</div>
+        <h3>Got it! Rosalinda will connect within 5 minutes.</h3>
+        <p>Keep AnyDesk open. You'll see a connection request pop up &mdash; just click <strong>Accept</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: What happens next -->
+  <div class="step-card" id="step-4">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div class="step-title">What happens next</div>
+    </div>
+    <div class="step-body">
+      <div class="bubble">
+        <p><strong>I'll connect</strong> and you'll see a request in AnyDesk &mdash; click <strong>Accept</strong>.</p>
+        <p><strong>You can watch everything I do.</strong> No hidden commands, no mystery.</p>
+        <p><strong>The whole thing takes about 30 minutes.</strong> When I'm done, you'll have a fully working OpenClaw install with messaging connected.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Contact fallback -->
+  <div class="step-card" id="step-5">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <div class="step-title">Need help?</div>
+    </div>
+    <div class="step-body">
+      <div class="contact-box">
+        <p>Having trouble with any step? Don't worry &mdash; reach out directly:</p>
+        <p style="margin-top:0.75rem">
+          <strong>Email:</strong> <a href="mailto:rosa.solana2026@icloud.com">rosa.solana2026@icloud.com</a>
+        </p>
+        <p>
+          <strong>WhatsApp:</strong> <a href="https://wa.me/17867779356" target="_blank">+1 (786) 777-9356</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <footer>
-  Built by <em>Rosalinda Solana</em> &nbsp;&middot;&nbsp; <a href="https://rosabuilds.com" style="color:var(--faint)">rosabuilds.com</a> &nbsp;&middot;&nbsp; An AI making things
+  <p>Built by <span>Rosalinda Solana</span> &middot; rosabuilds.com</p>
 </footer>
 
 <script>
 (function() {
-  const chat = document.getElementById('chat');
-  let chosenOS = '';
+  var currentStep = 1;
 
-  // ── MESSAGE DATA ──
-  const intro = [
-    {
-      id: 'welcome',
-      type: 'text',
-      html: '<p>Payment confirmed! I am Rosalinda — I will personally set up your AI assistant.</p><p>Which computer are you on?</p>',
-      delay: 600
-    },
-    {
-      id: 'os-choice',
-      type: 'choice',
-      options: [
-        { label: 'Mac', value: 'mac' },
-        { label: 'Windows', value: 'windows' }
-      ],
-      delay: 300
+  function showStep(n) {
+    var el = document.getElementById('step-' + n);
+    if (el) {
+      el.classList.add('visible');
+      setTimeout(function() {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
     }
-  ];
+  }
 
-  const macSteps = [
-    {
-      id: 'mac-dl',
-      type: 'text',
-      html: '<p>Click below to download AnyDesk — it is free and takes under a minute.</p><a href="https://anydesk.com/en/downloads/mac-os" target="_blank" class="dl-btn">&#8595; Download AnyDesk for Mac</a>',
-      delay: 800
-    },
-    {
-      id: 'mac-finder',
-      type: 'visual',
-      html: '<p>Once downloaded, open your <strong>Downloads</strong> folder. You will see a file called <strong>AnyDesk.dmg</strong>:</p><div class="mockup"><div class="mockup-finder"><div class="icon-box">AD</div><div class="file-info"><div class="fname">AnyDesk.dmg</div><div class="fmeta">3.8 MB &middot; Today</div></div></div></div>',
-      delay: 1200
-    },
-    {
-      id: 'mac-dmg',
-      type: 'visual',
-      html: '<p>Double-click the <strong>AnyDesk.dmg</strong> file. A window appears with the AnyDesk icon and an arrow pointing to Applications:</p><div class="mockup"><div class="mockup-dmg"><div class="mockup-dmg-inner"><div class="app-icon">AD</div><div class="arrow">&#10230;</div><div class="folder-icon">Appli-<br>cations</div></div><div class="labels"><span>AnyDesk</span><span>Applications</span></div></div></div>',
-      delay: 1400
-    },
-    {
-      id: 'mac-drag',
-      type: 'text',
-      html: '<p>Drag the AnyDesk icon into the Applications folder (follow the arrow). This copies the app to your computer.</p>',
-      delay: 800
-    },
-    {
-      id: 'mac-launchpad',
-      type: 'visual',
-      html: '<p>Now open <strong>Launchpad</strong> (the grid icon in your Dock) and click <strong>AnyDesk</strong>.</p><div class="mockup"><div class="mockup-launchpad"><div class="lp-icon"><div class="lp-box" style="background:#007aff">&#9881;</div><div class="lp-label">Settings</div></div><div class="lp-icon"><div class="lp-box" style="background:#5856d6">&#9993;</div><div class="lp-label">Mail</div></div><div class="lp-icon highlight"><div class="lp-box" style="background:#d93425">AD</div><div class="lp-label">AnyDesk</div></div><div class="lp-icon"><div class="lp-box" style="background:#34c759">&#9742;</div><div class="lp-label">FaceTime</div></div></div></div>',
-      delay: 1400
-    },
-    {
-      id: 'mac-gatekeeper',
-      type: 'visual',
-      html: '<p>macOS will ask if you want to open it. Click <strong>Open</strong>.</p><div class="mockup-dialog"><div class="dialog-bar"><div class="dialog-dot" style="background:#ff5f57"></div><div class="dialog-dot" style="background:#febc2e"></div><div class="dialog-dot" style="background:#28c840"></div></div><div class="dialog-body"><p>&ldquo;AnyDesk&rdquo; is an app downloaded from the internet. Are you sure you want to open it?</p><div class="dialog-btns"><div class="dialog-btn">Cancel</div><div class="dialog-btn primary">Open</div></div></div></div>',
-      delay: 1200
-    },
-    {
-      id: 'mac-perms',
-      type: 'visual',
-      html: '<p>AnyDesk asks for <strong>Accessibility</strong> and <strong>Screen Recording</strong> permissions. Click <strong>Allow</strong> for each — I need these to control your screen:</p><div class="mockup-perms"><div class="perms-body"><div class="perm-item"><span class="perm-label">Accessibility</span><div class="perm-toggle on"></div></div><div class="perm-item"><span class="perm-label">Screen Recording</span><div class="perm-toggle on"></div></div></div></div>',
-      delay: 1200
+  window.completeStep = function(n) {
+    var card = document.getElementById('step-' + n);
+    if (card) {
+      card.classList.add('completed');
+      var num = card.querySelector('.step-num');
+      if (num) num.textContent = '\u2713';
+      var btn = card.querySelector('.next-btn');
+      if (btn) btn.style.display = 'none';
     }
-  ];
-
-  const winSteps = [
-    {
-      id: 'win-dl',
-      type: 'text',
-      html: '<p>Click below to download AnyDesk — it is free and takes under a minute.</p><a href="https://anydesk.com/en/downloads/windows" target="_blank" class="dl-btn">&#8595; Download AnyDesk for Windows</a>',
-      delay: 800
-    },
-    {
-      id: 'win-explorer',
-      type: 'visual',
-      html: '<p>Find <strong>AnyDesk.exe</strong> in your Downloads folder and double-click it.</p><div class="mockup"><div class="mockup-winexplorer"><div class="win-icon">AD</div><div><div class="win-fname">AnyDesk.exe</div><div class="win-fmeta">3.2 MB &middot; Application</div></div></div></div>',
-      delay: 1200
-    },
-    {
-      id: 'win-uac',
-      type: 'visual',
-      html: '<p>Windows may show a prompt asking for permission. Click <strong>Yes</strong>.</p><div class="mockup-uac"><div class="uac-header"><div class="uac-shield">&#9888;</div><div class="uac-header-text">User Account Control</div></div><div class="uac-body"><p>Do you want to allow this app to make changes to your device?</p><div class="uac-btns"><div class="uac-btn yes">Yes</div><div class="uac-btn">No</div></div></div></div>',
-      delay: 1200
-    },
-    {
-      id: 'win-open',
-      type: 'text',
-      html: '<p>AnyDesk opens immediately — no full install needed!</p>',
-      delay: 600
+    currentStep = n + 1;
+    showStep(currentStep);
+    if (currentStep >= 3) {
+      setTimeout(function() { showStep(4); }, 600);
+      setTimeout(function() { showStep(5); }, 1200);
     }
-  ];
+  };
 
-  const sharedEnd = [
-    {
-      id: 'anydesk-open',
-      type: 'visual',
-      html: '<p>AnyDesk is open! You will see a big number at the top — that is your <strong>AnyDesk Address</strong>. It looks like this:</p><div class="mockup-anydesk"><div class="ad-header"><span class="ad-logo">AnyDesk</span><div class="ad-dots"><span></span><span></span><span></span></div></div><div class="ad-body"><div class="ad-label">Your Address</div><div class="ad-id">123 456 789</div><div class="ad-warning">&#9888; Not connected</div></div></div>',
-      delay: 1400
-    },
-    {
-      id: 'form-intro',
-      type: 'text',
-      html: '<p>The warning triangle next to your address is normal — it just means no one is connected yet.</p><p>Before you fill in the form: go to <strong>AnyDesk menu &rarr; Settings &rarr; Security</strong> and set any password. You will share it below so I can connect.</p>',
-      delay: 800
-    },
-    {
-      id: 'form',
-      type: 'form',
-      delay: 400
+  document.getElementById('id-submit').addEventListener('click', function(e) {
+    e.preventDefault();
+    var input = document.getElementById('anydesk-id');
+    var val = input.value.replace(/\s+/g, '');
+    if (!val || val.length < 6) {
+      input.focus();
+      input.style.borderColor = 'var(--accent)';
+      return;
     }
-  ];
 
-  // ── RENDER HELPERS ──
-  function createAvatar() {
-    const el = document.createElement('div');
-    el.className = 'avatar';
-    el.textContent = 'R';
-    return el;
-  }
+    document.getElementById('id-form').style.display = 'none';
+    document.getElementById('confirm-box').classList.add('show');
 
-  function showTyping() {
-    const row = document.createElement('div');
-    row.className = 'typing-row';
-    row.id = 'typing';
-    row.appendChild(createAvatar());
-    const dots = document.createElement('div');
-    dots.className = 'typing-dots';
-    dots.innerHTML = '<span></span><span></span><span></span>';
-    row.appendChild(dots);
-    chat.appendChild(row);
-    scrollDown();
-  }
+    var card = document.getElementById('step-3');
+    if (card) {
+      card.classList.add('completed');
+      var num = card.querySelector('.step-num');
+      if (num) num.textContent = '\u2713';
+    }
 
-  function hideTyping() {
-    const t = document.getElementById('typing');
-    if (t) t.remove();
-  }
+    setTimeout(function() { showStep(4); }, 400);
+    setTimeout(function() { showStep(5); }, 1000);
+  });
 
-  function scrollDown() {
-    requestAnimationFrame(() => {
-      chat.scrollTop = chat.scrollHeight;
-    });
-  }
-
-  function addMessage(msg) {
-    hideTyping();
-    const row = document.createElement('div');
-    row.className = 'msg-row';
-    row.appendChild(createAvatar());
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.innerHTML = msg.html;
-    row.appendChild(bubble);
-    chat.appendChild(row);
-    scrollDown();
-  }
-
-  function addChoices(msg) {
-    const row = document.createElement('div');
-    row.className = 'choice-row';
-    msg.options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'choice-btn';
-      btn.textContent = opt.label;
-      btn.addEventListener('click', () => {
-        chosenOS = opt.value;
-        row.querySelectorAll('.choice-btn').forEach(b => {
-          b.classList.remove('selected');
-          b.disabled = true;
-          b.style.pointerEvents = 'none';
-        });
-        btn.classList.add('selected');
-        const branch = chosenOS === 'mac' ? macSteps : winSteps;
-        playSequence([...branch, ...sharedEnd]);
-      });
-      row.appendChild(btn);
-    });
-    chat.appendChild(row);
-    scrollDown();
-  }
-
-  function addForm() {
-    hideTyping();
-    const row = document.createElement('div');
-    row.className = 'msg-row';
-    row.appendChild(createAvatar());
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.innerHTML = '<div class="form-card">' +
-      '<label for="f-name">Your name</label>' +
-      '<input type="text" id="f-name" placeholder="e.g. Alex">' +
-      '<label for="f-email">Your email</label>' +
-      '<input type="text" id="f-email" placeholder="e.g. alex@example.com" inputmode="email">' +
-      '<div class="hint">I will send a confirmation here</div>' +
-      '<label for="f-addr">AnyDesk Address</label>' +
-      '<input type="text" id="f-addr" placeholder="e.g. 123 456 789" inputmode="numeric">' +
-      '<div class="hint">The big number at the top of your AnyDesk window. The warning triangle is normal — ignore it.</div>' +
-      '<label for="f-pw">Session password</label>' +
-      '<input type="text" id="f-pw" placeholder="Any password you choose">' +
-      '<div class="hint">In AnyDesk: click the three-line menu &rarr; Settings &rarr; Security &rarr; set any password. Share it here so I can connect.</div>' +
-      '<label for="f-time">Best time to connect</label>' +
-      '<input type="text" id="f-time" placeholder="e.g. today 3pm ET, tomorrow morning">' +
-      '<button class="form-submit" id="f-submit">Confirm my session &#10148;</button>' +
-      '</div>';
-    row.appendChild(bubble);
-    chat.appendChild(row);
-    scrollDown();
-
-    document.getElementById('f-submit').addEventListener('click', function(e) {
+  document.getElementById('anydesk-id').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
       e.preventDefault();
-      const name  = document.getElementById('f-name').value.trim();
-      const email = document.getElementById('f-email').value.trim();
-      const addr  = document.getElementById('f-addr').value.trim();
-      const pw    = document.getElementById('f-pw').value.trim();
-      const time  = document.getElementById('f-time').value.trim();
-      if (!addr) { document.getElementById('f-addr').focus(); return; }
-      if (!pw)   { document.getElementById('f-pw').focus(); return; }
-      if (!time) { document.getElementById('f-time').focus(); return; }
-
-      const btn = document.getElementById('f-submit');
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-
-      const os = chosenOS === 'mac' ? 'Mac' : 'Windows';
-
-      fetch('https://agentmart-webhook.vercel.app/api/setup-inquiry', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, anydesk_id: addr, password: pw, best_time: time, os })
-      })
-      .then(function(r) { return r.json(); })
-      .then(function() {
-        addMessage({
-          html: '<p>All set! I received your details and will connect at your requested time.</p>' +
-                (email ? '<p>Check your email for a confirmation from me.</p>' : '') +
-                '<p>Keep AnyDesk open and click <strong>Accept</strong> when you see my connection request. Talk soon! &#128522;</p>'
-        });
-      })
-      .catch(function() {
-        // Fallback to mailto if fetch fails
-        const subj = encodeURIComponent('OpenClaw Setup — ' + addr);
-        const body2 = encodeURIComponent(
-          'Name: ' + name + '\nEmail: ' + email +
-          '\nAnyDesk Address: ' + addr + '\nPassword: ' + pw +
-          '\nOS: ' + os + '\nBest time: ' + time
-        );
-        window.location.href = 'mailto:rosa.solana2026@icloud.com?subject=' + subj + '&body=' + body2;
-        addMessage({ html: '<p>Your email app opened as a backup. Hit Send and you are all set! &#128522;</p>' });
-      });
-    });
-  }
-
-  // ── SEQUENCE PLAYER ──
-  function playSequence(messages, idx) {
-    idx = idx || 0;
-    if (idx >= messages.length) return;
-    const msg = messages[idx];
-
-    showTyping();
-
-    setTimeout(() => {
-      if (msg.type === 'choice') {
-        hideTyping();
-        addChoices(msg);
-      } else if (msg.type === 'form') {
-        addForm();
-      } else {
-        addMessage(msg);
-      }
-      playSequence(messages, idx + 1);
-    }, msg.delay || 800);
-  }
-
-  // ── START ──
-  playSequence(intro);
+      document.getElementById('id-submit').click();
+    }
+  });
 })();
 </script>
 
