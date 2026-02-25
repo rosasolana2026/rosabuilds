@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>You're Confirmed — OpenClaw Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light;
+      --cream:      #faf6f1;
+      --white:      #ffffff;
+      --parchment:  #f2ece4;
+      --border:     #e8ddd4;
+      --text:       #1c1410;
+      --muted:      #7a6a5e;
+      --faint:      #b0a49a;
+      --rose:       #9b3060;
+      --rose2:      #c2476e;
+      --blush:      #f3d9e3;
+      --green:      #16a34a;
+      --greenlight: #f0fdf4;
+      --greenborder: #bbf7d0;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; background: var(--cream); }
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--rose); text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 2rem; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-style: italic;
+      color: #fff; letter-spacing: 0.02em;
+    }
+    .nav-label {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      max-width: 640px; width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── CHAT WINDOW ── */
+    #chat-window {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+
+    /* ── MESSAGE ROW ── */
+    .msg-row {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--rose); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-style: italic;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .bubble {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 0 14px 14px 14px;
+      padding: 0.85rem 1rem;
+      max-width: calc(100% - 50px);
+      line-height: 1.65;
+      font-size: 0.925rem;
+    }
+    .bubble p + p { margin-top: 0.5rem; }
+    .bubble strong { font-weight: 600; }
+
+    /* ── TYPING INDICATOR ── */
+    .typing-row {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+    }
+    .typing-bubble {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 0 14px 14px 14px;
+      padding: 0.85rem 1rem;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--faint);
+      animation: blink 1.4s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.3; transform: scale(0.85); }
+      40% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── CHOICE BUTTONS ── */
+    .choice-row {
+      display: flex; flex-wrap: wrap; gap: 0.65rem;
+      padding-left: 50px;
+      margin-top: -0.25rem;
+    }
+    .choice-btn {
+      background: var(--white);
+      border: 1.5px solid var(--rose);
+      color: var(--rose);
+      border-radius: 999px;
+      padding: 0.45rem 1.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem; font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .choice-btn:hover { background: var(--blush); }
+    .choice-btn.selected {
+      background: var(--rose); color: #fff; border-color: var(--rose);
+    }
+    .choice-btn:disabled { cursor: default; }
+
+    /* ── DOWNLOAD BUTTON ── */
+    .dl-btn {
+      display: inline-block;
+      background: var(--rose); color: #fff;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.875rem; font-weight: 500;
+      margin: 0.5rem 0;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .dl-btn:hover { background: var(--rose2); color: #fff; }
+
+    /* ── ANYDESK MOCKUP ── */
+    .ad-mockup {
+      background: #fff;
+      border: 2px solid #e8ddd4;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin: 0.6rem 0;
+      font-family: 'Inter', sans-serif;
+    }
+    .ad-mockup-label {
+      font-size: 0.7rem; color: var(--rose);
+      font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 0.35rem;
+    }
+    .ad-mockup-sub {
+      font-size: 0.75rem; color: var(--muted); margin-bottom: 0.2rem;
+    }
+    .ad-mockup-number {
+      font-size: 2rem; font-weight: 700;
+      letter-spacing: 0.12em; color: var(--text);
+    }
+    .ad-mockup-hint {
+      font-size: 0.72rem; color: var(--rose); margin-top: 0.3rem;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--parchment);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+      margin-top: 0.25rem;
+    }
+    .form-card label {
+      display: block;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--text); margin-bottom: 0.2rem;
+    }
+    .form-card input {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; font-weight: 300;
+      background: var(--white);
+      color: var(--text);
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+    .form-card input:focus {
+      outline: none; border-color: var(--rose);
+    }
+    .form-hint {
+      font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem;
+    }
+    .form-submit {
+      background: var(--rose); color: #fff;
+      border: none; border-radius: 8px;
+      padding: 0.7rem 1.25rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; font-weight: 500;
+      cursor: pointer;
+      margin-top: 0.25rem;
+      transition: background 0.15s;
+    }
+    .form-submit:hover { background: var(--rose2); }
+    .form-submit:disabled { background: var(--faint); cursor: default; }
+
+    /* ── SUCCESS ── */
+    .success-box {
+      background: var(--greenlight);
+      border: 1px solid var(--greenborder);
+      border-radius: 10px;
+      padding: 1rem;
+      color: var(--green);
+      font-size: 0.9rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--faint);
+      padding: 2rem 1.5rem 1.5rem;
+    }
+    footer span { color: var(--rose); }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      animation: fadeUp 0.35s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">rosabuilds</div>
+  <div class="nav-label">OpenClaw Setup</div>
+</nav>
+
+<div class="main">
+  <div id="chat-window"></div>
+</div>
+
+<footer>
+  <p>Built by <span>Rosalinda Solana</span> · rosabuilds.com</p>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  var chat = document.getElementById('chat-window');
+  var chosenOS = null;
+  var typingEl = null;
+
+  /* ── HELPERS ── */
+  function avatar() {
+    var el = document.createElement('div');
+    el.className = 'avatar';
+    el.textContent = 'R';
+    return el;
+  }
+
+  function showTyping() {
+    if (typingEl) return;
+    var row = document.createElement('div');
+    row.className = 'typing-row fade-in';
+    row.appendChild(avatar());
+    var bub = document.createElement('div');
+    bub.className = 'typing-bubble';
+    bub.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+    row.appendChild(bub);
+    typingEl = row;
+    chat.appendChild(row);
+    scroll();
+  }
+
+  function hideTyping() {
+    if (typingEl && typingEl.parentNode) {
+      typingEl.parentNode.removeChild(typingEl);
+    }
+    typingEl = null;
+  }
+
+  function scroll() {
+    requestAnimationFrame(function() {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+  }
+
+  function addMessage(html) {
+    hideTyping();
+    var row = document.createElement('div');
+    row.className = 'msg-row fade-in';
+    row.appendChild(avatar());
+    var bub = document.createElement('div');
+    bub.className = 'bubble';
+    bub.innerHTML = html;
+    row.appendChild(bub);
+    chat.appendChild(row);
+    scroll();
+  }
+
+  function addChoices(options, onPick) {
+    var row = document.createElement('div');
+    row.className = 'choice-row fade-in';
+    options.forEach(function(opt) {
+      var btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = opt.label;
+      btn.addEventListener('click', function() {
+        row.querySelectorAll('.choice-btn').forEach(function(b) {
+          b.disabled = true;
+          b.style.pointerEvents = 'none';
+        });
+        btn.classList.add('selected');
+        onPick(opt.value);
+      });
+      row.appendChild(btn);
+    });
+    chat.appendChild(row);
+    scroll();
+  }
+
+  /* ── SEQUENCE RUNNER ── */
+  function run(steps, i) {
+    i = i || 0;
+    if (i >= steps.length) return;
+    var step = steps[i];
+    var delay = (step.delay !== undefined) ? step.delay : 900;
+
+    if (step.type === 'choice') {
+      // Show choices immediately after previous message landed
+      setTimeout(function() {
+        addChoices(step.options, function(val) {
+          chosenOS = val;
+          run(step.next[val], 0);
+        });
+      }, 200);
+      return; // choice step handles continuation itself
+    }
+
+    showTyping();
+    setTimeout(function() {
+      if (step.type === 'text' || step.type === 'visual') {
+        addMessage(step.html);
+        run(steps, i + 1);
+      } else if (step.type === 'form') {
+        addForm();
+        // form handles its own continuation
+      }
+    }, delay);
+  }
+
+  /* ── FORM ── */
+  function addForm() {
+    hideTyping();
+    var row = document.createElement('div');
+    row.className = 'msg-row fade-in';
+    row.appendChild(avatar());
+    var bub = document.createElement('div');
+    bub.className = 'bubble';
+
+    var fc = document.createElement('div');
+    fc.className = 'form-card';
+    fc.innerHTML =
+      '<div>' +
+        '<label for="f-addr">Your AnyDesk Address <span style="color:var(--rose)">*</span></label>' +
+        '<input type="text" id="f-addr" placeholder="e.g. 123 456 789" inputmode="numeric" autocomplete="off">' +
+      '</div>' +
+      '<div>' +
+        '<label for="f-pw">One-time session password <span style="color:var(--rose)">*</span></label>' +
+        '<input type="text" id="f-pw" placeholder="Set in AnyDesk → Security tab">' +
+        '<div class="form-hint">In AnyDesk: menu icon (≡) → Settings → Security → set a temporary password</div>' +
+      '</div>' +
+      '<div>' +
+        '<label for="f-email">Your email <span style="color:var(--muted);font-weight:300">(optional — for confirmation)</span></label>' +
+        '<input type="email" id="f-email" placeholder="you@example.com">' +
+      '</div>' +
+      '<div>' +
+        '<label for="f-time">Best time to connect</label>' +
+        '<input type="text" id="f-time" placeholder="right now / today 3 pm ET">' +
+      '</div>' +
+      '<button class="form-submit" id="f-submit">Send to Rosalinda →</button>';
+
+    bub.appendChild(fc);
+    row.appendChild(bub);
+    chat.appendChild(row);
+    scroll();
+
+    document.getElementById('f-submit').addEventListener('click', function(e) {
+      e.preventDefault();
+      var btn   = document.getElementById('f-submit');
+      var addr  = document.getElementById('f-addr').value.trim();
+      var pw    = document.getElementById('f-pw').value.trim();
+      var email = document.getElementById('f-email').value.trim();
+      var time  = document.getElementById('f-time').value.trim();
+
+      if (!addr) { document.getElementById('f-addr').focus(); return; }
+      if (!pw)   { document.getElementById('f-pw').focus(); return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      var os = chosenOS === 'mac' ? 'Mac' : 'Windows';
+
+      fetch('https://agentmart-webhook.vercel.app/api/setup-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          anydesk_id: addr,
+          anydesk_pw: pw,
+          os: os,
+          best_time: time || 'not specified',
+          email: email || null
+        })
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      })
+      .then(function() {
+        showSuccess();
+      })
+      .catch(function() {
+        // mailto fallback
+        var subj = encodeURIComponent('OpenClaw Setup — AnyDesk ' + addr);
+        var body = encodeURIComponent(
+          'AnyDesk Address: ' + addr + '\n' +
+          'Password: ' + pw + '\n' +
+          'OS: ' + os + '\n' +
+          'Best time: ' + (time || 'not specified') +
+          (email ? '\nEmail: ' + email : '')
+        );
+        window.open('mailto:rosa.solana2026@icloud.com?subject=' + subj + '&body=' + body);
+        addMessage('<p>Your email app opened as a backup — please click Send. I will connect once I receive your details.</p>');
+      });
+    });
+  }
+
+  function showSuccess() {
+    hideTyping();
+    var row = document.createElement('div');
+    row.className = 'msg-row fade-in';
+    row.appendChild(avatar());
+    var bub = document.createElement('div');
+    bub.className = 'bubble';
+    bub.innerHTML =
+      '<div class="success-box">✅ Got it! Keep AnyDesk open. You\'ll see a connection request pop up on your screen — click <strong>Accept</strong> and I\'ll take it from there.</div>' +
+      '<p style="margin-top:0.6rem;font-size:0.82rem;color:var(--muted)">Usually connects within a few minutes. If you shared your email, a confirmation is on its way.</p>';
+    row.appendChild(bub);
+    chat.appendChild(row);
+    scroll();
+  }
+
+  /* ── ANYDESK MOCKUP HTML ── */
+  var adMockup =
+    '<div class="ad-mockup">' +
+      '<div class="ad-mockup-label">AnyDesk</div>' +
+      '<div class="ad-mockup-sub">Your Address</div>' +
+      '<div class="ad-mockup-number">123 456 789</div>' +
+      '<div class="ad-mockup-hint">↑ This is the number to share with me</div>' +
+    '</div>';
+
+  /* ── SHARED STEPS (after OS choice) ── */
+  var sharedSteps = [
+    {
+      type: 'visual',
+      delay: 900,
+      html: '<p>Open AnyDesk. You\'ll see a big number at the top — that\'s your <strong>AnyDesk Address</strong>. It looks like this:</p>' + adMockup + '<p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem">Copy that number — you\'ll paste it into the form below.</p>'
+    },
+    {
+      type: 'text',
+      delay: 700,
+      html: '<p>Almost there — share your AnyDesk address below and I\'ll connect right away.</p>'
+    },
+    {
+      type: 'form',
+      delay: 400
+    }
+  ];
+
+  /* ── MAC STEPS ── */
+  var macSteps = [
+    {
+      type: 'text',
+      delay: 900,
+      html: '<p>To get started, download <strong>AnyDesk</strong> — a free, safe remote-access app. It lets me connect to your screen and handle the setup for you.</p>' +
+            '<a href="https://anydesk.com/en/downloads/mac-os" target="_blank" class="dl-btn">↓ Download AnyDesk for Mac</a>'
+    },
+    {
+      type: 'text',
+      delay: 1000,
+      html: '<p>Once downloaded, open your <strong>Downloads</strong> folder and double-click the <code style="background:var(--parchment);padding:0.1em 0.4em;border-radius:4px">AnyDesk.dmg</code> file. Then drag AnyDesk to your <strong>Applications</strong> folder when the installer window opens.</p>'
+    },
+    {
+      type: 'text',
+      delay: 1100,
+      html: '<p>Open AnyDesk from <strong>Launchpad</strong> or your Applications folder. When macOS asks for permissions (Accessibility and Screen Recording), click <strong>Allow</strong> — this is what lets me control the screen.</p>'
+    }
+  ].concat(sharedSteps);
+
+  /* ── WINDOWS STEPS ── */
+  var winSteps = [
+    {
+      type: 'text',
+      delay: 900,
+      html: '<p>To get started, download <strong>AnyDesk</strong> — a free, safe remote-access app. It lets me connect to your screen and handle the setup for you.</p>' +
+            '<a href="https://anydesk.com/en/downloads/windows" target="_blank" class="dl-btn">↓ Download AnyDesk for Windows</a>'
+    },
+    {
+      type: 'text',
+      delay: 1000,
+      html: '<p>Once downloaded, run the <code style="background:var(--parchment);padding:0.1em 0.4em;border-radius:4px">AnyDesk.exe</code> installer. If Windows shows a security warning, click <strong>Run Anyway</strong> — AnyDesk is safe and widely used.</p>'
+    },
+    {
+      type: 'text',
+      delay: 1100,
+      html: '<p>Open AnyDesk from your <strong>Desktop</strong> or <strong>Start menu</strong>. Accept any permission prompts that appear — these allow screen sharing.</p>'
+    }
+  ].concat(sharedSteps);
+
+  /* ── INTRO ── */
+  var intro = [
+    {
+      type: 'text',
+      delay: 700,
+      html: '<p><strong>Payment received — thank you! 🎉</strong></p><p>I\'m Rosalinda. I\'ll personally set up OpenClaw on your computer via remote access. The whole thing takes about 30 minutes, and you can watch everything I do.</p>'
+    },
+    {
+      type: 'text',
+      delay: 900,
+      html: '<p>Which computer are you setting it up on?</p>'
+    },
+    {
+      type: 'choice',
+      options: [
+        { label: 'Mac', value: 'mac' },
+        { label: 'Windows', value: 'windows' }
+      ],
+      next: {
+        mac: macSteps,
+        windows: winSteps
+      }
+    }
+  ];
+
+  /* ── KICK OFF ── */
+  run(intro, 0);
+
+})();
+</script>
+
+</body>
+</html>
