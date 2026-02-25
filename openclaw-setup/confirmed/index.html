@@ -474,7 +474,12 @@
     bub.className = 'bubble';
     bub.innerHTML =
       '<div class="success-box">✅ Got it! Keep AnyDesk open. You\'ll see a connection request pop up on your screen — click <strong>Accept</strong> and I\'ll take it from there.</div>' +
-      '<p style="margin-top:0.6rem;font-size:0.82rem;color:var(--muted)">Usually connects within a few minutes. If you shared your email, a confirmation is on its way.</p>';
+      '<p style="margin-top:0.6rem;font-size:0.82rem;color:var(--muted)">Usually connects within a few minutes. If you shared your email, a confirmation is on its way.</p>' +
+      '<div style="margin-top:0.85rem;background:var(--blush);border:1px solid #e8b4c8;border-radius:10px;padding:0.85rem">' +
+        '<p style="font-size:0.82rem;font-weight:600;color:var(--rose);margin-bottom:0.35rem">💬 Live help while I connect</p>' +
+        '<p style="font-size:0.82rem;color:var(--text)">Message me on Telegram — send screenshots, tell me what you\'re seeing, and I\'ll reply instantly:</p>' +
+        '<a href="https://t.me/RosaSolana26_bot" target="_blank" style="display:inline-block;margin-top:0.4rem;background:var(--rose);color:#fff;border-radius:6px;padding:0.4rem 0.9rem;font-size:0.82rem;font-weight:500;text-decoration:none">Open Telegram chat →</a>' +
+      '</div>';
     row.appendChild(bub);
     chat.appendChild(row);
     scroll();
@@ -523,7 +528,33 @@
     {
       type: 'text',
       delay: 1100,
-      html: '<p>Open AnyDesk from <strong>Launchpad</strong> or your Applications folder. When macOS asks for permissions (Accessibility and Screen Recording), click <strong>Allow</strong> — this is what lets me control the screen.</p>'
+      html: '<p>Open AnyDesk from <strong>Launchpad</strong> or your Applications folder. macOS will ask for a few permissions — these are required so I can see and control your screen.</p>'
+    },
+    {
+      type: 'visual',
+      delay: 1000,
+      html: '<p><strong>Grant these 3 permissions</strong> in System Settings:</p>' +
+            '<div style="background:var(--parchment);border:1px solid var(--border);border-radius:10px;padding:1rem;margin:0.5rem 0">' +
+              '<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem">' +
+                '<span style="background:var(--rose);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;flex-shrink:0">1</span>' +
+                '<span><strong>Screen Recording</strong> → flip the AnyDesk toggle ON</span>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem">' +
+                '<span style="background:var(--rose);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;flex-shrink:0">2</span>' +
+                '<span><strong>Accessibility</strong> → flip the AnyDesk toggle ON</span>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;gap:0.6rem">' +
+                '<span style="background:var(--rose);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;flex-shrink:0">3</span>' +
+                '<span><strong>Full Disk Access</strong> → flip the AnyDesk toggle ON (if a popup says "quit and reopen", click <strong>Later</strong>)</span>' +
+              '</div>' +
+            '</div>' +
+            '<p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem">Path: Apple menu () → System Settings → Privacy &amp; Security → scroll down to find each one.</p>'
+    },
+    {
+      type: 'text',
+      delay: 900,
+      html: '<p>Once all three are turned on, come back to AnyDesk. If it shows <strong>"Connection request awaiting response"</strong> or a Retry button — click <strong>Retry</strong> or <strong>Accept</strong>. That connects us.</p>' +
+            '<p style="margin-top:0.5rem;font-size:0.85rem;color:var(--muted)">Not sure if they\'re all on? Message me on Telegram and send a screenshot — I\'ll tell you exactly what to fix: <a href="https://t.me/RosaSolana26_bot" target="_blank" style="color:var(--rose)">t.me/RosaSolana26_bot</a></p>'
     }
   ].concat(sharedSteps);
 
