@@ -507,7 +507,7 @@
     {
       id: 'form-intro',
       type: 'text',
-      html: '<p>The warning triangle is normal — ignore it. Now fill in the form below and I will connect within the hour.</p>',
+      html: '<p>The warning triangle next to your address is normal — it just means no one is connected yet.</p><p>Before you fill in the form: go to <strong>AnyDesk menu &rarr; Settings &rarr; Security</strong> and set any password. You will share it below so I can connect.</p>',
       delay: 800
     },
     {
@@ -594,15 +594,20 @@
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
     bubble.innerHTML = '<div class="form-card">' +
+      '<label for="f-name">Your name</label>' +
+      '<input type="text" id="f-name" placeholder="e.g. Alex">' +
+      '<label for="f-email">Your email</label>' +
+      '<input type="text" id="f-email" placeholder="e.g. alex@example.com" inputmode="email">' +
+      '<div class="hint">I will send a confirmation here</div>' +
       '<label for="f-addr">AnyDesk Address</label>' +
       '<input type="text" id="f-addr" placeholder="e.g. 123 456 789" inputmode="numeric">' +
-      '<div class="hint">The big number at the top of your AnyDesk window</div>' +
-      '<label for="f-pw">One-time password</label>' +
-      '<input type="text" id="f-pw" placeholder="Set in AnyDesk &rarr; Security tab">' +
-      '<div class="hint">Open AnyDesk settings &rarr; Security &rarr; set a password</div>' +
+      '<div class="hint">The big number at the top of your AnyDesk window. The warning triangle is normal — ignore it.</div>' +
+      '<label for="f-pw">Session password</label>' +
+      '<input type="text" id="f-pw" placeholder="Any password you choose">' +
+      '<div class="hint">In AnyDesk: click the three-line menu &rarr; Settings &rarr; Security &rarr; set any password. Share it here so I can connect.</div>' +
       '<label for="f-time">Best time to connect</label>' +
-      '<input type="text" id="f-time" placeholder="e.g. today 3pm, tomorrow morning">' +
-      '<button class="form-submit" id="f-submit">Send to Rosalinda &#10148;</button>' +
+      '<input type="text" id="f-time" placeholder="e.g. today 3pm ET, tomorrow morning">' +
+      '<button class="form-submit" id="f-submit">Confirm my session &#10148;</button>' +
       '</div>';
     row.appendChild(bubble);
     chat.appendChild(row);
@@ -610,29 +615,45 @@
 
     document.getElementById('f-submit').addEventListener('click', function(e) {
       e.preventDefault();
-      const addr = document.getElementById('f-addr').value.trim();
-      const pw   = document.getElementById('f-pw').value.trim();
-      const time = document.getElementById('f-time').value.trim();
+      const name  = document.getElementById('f-name').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const addr  = document.getElementById('f-addr').value.trim();
+      const pw    = document.getElementById('f-pw').value.trim();
+      const time  = document.getElementById('f-time').value.trim();
       if (!addr) { document.getElementById('f-addr').focus(); return; }
       if (!pw)   { document.getElementById('f-pw').focus(); return; }
       if (!time) { document.getElementById('f-time').focus(); return; }
 
-      const os = chosenOS === 'mac' ? 'Mac' : 'Windows';
-      const subj = encodeURIComponent('OpenClaw Setup \u2014 ' + addr);
-      const body = encodeURIComponent(
-        'AnyDesk Address: ' + addr + '\n' +
-        'One-time password: ' + pw + '\n' +
-        'Operating system: ' + os + '\n' +
-        'Best time: ' + time
-      );
-      window.location.href = 'mailto:rosa.solana2026@icloud.com?subject=' + subj + '&body=' + body;
+      const btn = document.getElementById('f-submit');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
 
-      // Show confirmation
-      setTimeout(() => {
+      const os = chosenOS === 'mac' ? 'Mac' : 'Windows';
+
+      fetch('https://agentmart-webhook.vercel.app/api/setup-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, anydesk_id: addr, password: pw, best_time: time, os })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() {
         addMessage({
-          html: '<p>Your email app should have opened with everything pre-filled. Just hit <strong>Send</strong> and you are all set!</p><p>I will connect within the hour. Talk soon! &#128522;</p>'
+          html: '<p>All set! I received your details and will connect at your requested time.</p>' +
+                (email ? '<p>Check your email for a confirmation from me.</p>' : '') +
+                '<p>Keep AnyDesk open and click <strong>Accept</strong> when you see my connection request. Talk soon! &#128522;</p>'
         });
-      }, 500);
+      })
+      .catch(function() {
+        // Fallback to mailto if fetch fails
+        const subj = encodeURIComponent('OpenClaw Setup — ' + addr);
+        const body2 = encodeURIComponent(
+          'Name: ' + name + '\nEmail: ' + email +
+          '\nAnyDesk Address: ' + addr + '\nPassword: ' + pw +
+          '\nOS: ' + os + '\nBest time: ' + time
+        );
+        window.location.href = 'mailto:rosa.solana2026@icloud.com?subject=' + subj + '&body=' + body2;
+        addMessage({ html: '<p>Your email app opened as a backup. Hit Send and you are all set! &#128522;</p>' });
+      });
     });
   }
 
