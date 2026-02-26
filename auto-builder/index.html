@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto‑Builder — rosabuilds</title>
+  <meta name="description" content="Describe what you want built; I generate a working scaffold and send you a ZIP + README." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#faf6f1; --card:#ffffff; --border:#e8ddd4; --text:#1c1410; --muted:#7a6a5e; --rose:#9b3060; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);} a{color:inherit;text-decoration:none}
+    .wrap{max-width:900px;margin:0 auto;padding:2rem 1.25rem}
+    h1{font-size:2rem;margin:0 0 .5rem} p.lead{color:var(--muted);margin:.25rem 0 1.25rem}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem}
+    form{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    label{font-size:.8rem;color:var(--muted)} input,textarea,select{width:100%;padding:.7rem;border:1px solid var(--border);border-radius:8px;background:#fff}
+    textarea{min-height:120px;grid-column:span 2}
+    .full{grid-column:span 2}
+    button{background:var(--rose);color:#fff;border:0;padding:.8rem 1rem;border-radius:8px;font-weight:600;cursor:pointer}
+    .muted{font-size:.85rem;color:var(--muted);margin-top:.75rem}
+    .ok{margin-top:1rem;padding:.8rem 1rem;background:#f3d9e3;border:1px solid var(--border);border-radius:8px;display:none}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Auto‑Builder</h1>
+    <p class="lead">Tell me what you want built (site / simple app). I’ll generate a working scaffold + copy and email you a ZIP with a README and free deploy steps.</p>
+
+    <div class="card">
+      <form id="ab-form">
+        <div>
+          <label>Your name</label>
+          <input name="name" required placeholder="Jane Doe" />
+        </div>
+        <div>
+          <label>Email</label>
+          <input type="email" name="email" required placeholder="you@example.com" />
+        </div>
+
+        <div>
+          <label>Project type</label>
+          <select name="type" required>
+            <option value="marketing-site">Marketing site</option>
+            <option value="simple-app">Simple web app</option>
+            <option value="landing-page">Landing page</option>
+          </select>
+        </div>
+        <div>
+          <label>Target audience</label>
+          <input name="audience" placeholder="Parents, indie hackers, SMBs..." />
+        </div>
+
+        <textarea name="goals" placeholder="Goals (what success looks like)"></textarea>
+        <textarea name="features" placeholder="Key features / sections"></textarea>
+        <textarea name="style" placeholder="Style (brand, colors, references)"></textarea>
+        <textarea name="examples" placeholder="Links to examples you like (optional)"></textarea>
+
+        <div class="full">
+          <label>Deploy target</label>
+          <select name="deploy">
+            <option value="github-pages">GitHub Pages (free)</option>
+            <option value="here-now">here.now (free)</option>
+            <option value="none">ZIP only</option>
+          </select>
+        </div>
+
+        <div class="full" style="display:flex;gap:.75rem;align-items:center;justify-content:flex-start;margin-top:.25rem">
+          <button type="submit">Submit brief</button>
+          <span class="muted">You’ll get a confirmation with a Job ID by email.</span>
+        </div>
+      </form>
+      <div id="ok" class="ok">Thanks — your brief is in. Job ID: <code id="job"></code>. I’ll email the ZIP when it’s ready.</div>
+    </div>
+
+    <p class="muted">Zero‑cost MVP: generation runs locally on my Mac (Qwen 35B). I’ll add auto‑deploy after we get first user feedback.</p>
+  </div>
+
+  <script>
+    const f = document.getElementById('ab-form');
+    const ok = document.getElementById('ok');
+    const jobEl = document.getElementById('job');
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(f).entries());
+      try {
+        // Placeholder endpoint; backend will write jobs JSON. For now, simulate ID.
+        // await fetch('https://auto-builder.here.now/api/submit', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+        const id = 'JOB-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+        jobEl.textContent = id;
+        ok.style.display = 'block';
+        f.reset();
+      } catch (e) {
+        alert('Submission failed. Please email your brief to rosa.solana2026@icloud.com');
+      }
+    });
+  </script>
+</body>
+</html>
