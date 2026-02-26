@@ -1,646 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <title>OpenClaw Setup — Three Ways to Get Running</title>
-  <meta name="description" content="Install OpenClaw on your Mac — do it yourself free, let me do it remotely for $49, or get a managed cloud VM for $49/month.">
-  <meta property="og:title" content="OpenClaw Setup — Three Ways to Get Running">
-  <meta property="og:description" content="DIY free · Remote install $49 · Managed VM $49/mo. AI on your machine, your way.">
-  <meta property="og:url" content="https://rosabuilds.com/openclaw-setup/">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw Setup — Get Running Fast</title>
+  <meta name="description" content="Get OpenClaw installed and running. Free step-by-step chat guidance, or let me do it for you completely.">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      color-scheme: dark;
-      --bg:     #0a0a0a;
-      --bg2:    #111;
-      --bg3:    #1a1a1a;
-      --border: #222;
-      --text:   #f0ede6;
-      --muted:  #888;
-      --accent: #c9184a;
-      --accent2:#ff4d6d;
-      --green:  #22c55e;
-      --yellow: #eab308;
-      --blue:   #3b82f6;
-    }
-
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.7; min-height: 100vh; }
-    a { color: inherit; text-decoration: none; }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(10,10,10,0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem; height: 56px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; }
-    .nav-logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 2rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-    .nav-links a:hover { color: var(--text); }
-
-    /* ── HERO ── */
-    .hero {
-      max-width: 740px; margin: 0 auto;
-      padding: 5rem 2rem 3rem;
-      text-align: center;
-    }
-    .hero-label {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
-      font-weight: 700; line-height: 1.2;
-      letter-spacing: -0.02em; margin-bottom: 1.5rem;
-    }
-    .hero p {
-      font-size: 1.05rem; color: var(--muted);
-      max-width: 560px; margin: 0 auto 2rem; line-height: 1.8;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
-      color: var(--green); border-radius: 100px;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
-      padding: 0.35rem 0.9rem; text-transform: uppercase;
-    }
-    .hero-badge::before { content: '●'; font-size: 0.5rem; }
-
-    /* ── SECTION ── */
-    .section {
-      max-width: 900px; margin: 0 auto;
-      padding: 3rem 2rem;
-    }
-    .section-border { border-top: 1px solid var(--border); }
-    .section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 700;
-      margin-bottom: 1.8rem; text-align: center;
-    }
-    .section-sub {
-      text-align: center; color: var(--muted);
-      font-size: 0.88rem; margin-top: -1.2rem; margin-bottom: 1.8rem;
-    }
-
-    /* ── PRICING TIERS ── */
-    .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-
-    .tier {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 2px; padding: 2rem 1.75rem;
-      display: flex; flex-direction: column; gap: 1rem;
-      position: relative;
-    }
-    .tier.featured {
-      border-color: var(--accent);
-      background: linear-gradient(160deg, #180009 0%, #111 60%);
-    }
-    .tier .featured-badge {
-      position: absolute; top: -1px; right: 1.5rem;
-      background: var(--accent); color: #fff;
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.25rem 0.65rem;
-    }
-
-    .tier-label {
-      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--muted);
-    }
-    .tier.featured .tier-label { color: var(--accent); }
-
-    .tier-price {
-      display: flex; align-items: baseline; gap: 0.3rem;
-      line-height: 1;
-    }
-    .tier-price .amount {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.6rem; font-weight: 700;
-    }
-    .tier-price .period {
-      font-size: 0.8rem; color: var(--muted);
-    }
-
-    .tier-name {
-      font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
-    }
-
-    .tier-desc {
-      font-size: 0.83rem; color: var(--muted); line-height: 1.6;
-      flex: 1;
-    }
-
-    .tier-features {
-      list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
-    }
-    .tier-features li {
-      font-size: 0.8rem; color: var(--muted);
-      display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.4;
-    }
-    .tier-features li::before {
-      content: '✓'; color: var(--green); font-weight: 700;
-      flex-shrink: 0; margin-top: 0.05em;
-    }
-    .tier.featured .tier-features li { color: #ccc; }
-
-    .cta {
-      display: inline-block; text-align: center;
-      padding: 0.8rem 1.5rem;
-      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.07em;
-      text-transform: uppercase;
-      border: none; border-radius: 2px; cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .cta:hover { transform: translateY(-1px); }
-    .cta-primary { background: var(--accent); color: #fff; }
-    .cta-primary:hover { background: var(--accent2); }
-    .cta-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
-    .cta-secondary:hover { border-color: #444; }
-    .cta-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-    .cta-ghost:hover { color: var(--text); border-color: #555; }
-
-    /* ── COMPARE TABLE ── */
-    .compare {
-      width: 100%; border-collapse: collapse; font-size: 0.83rem;
-      margin-top: 0.5rem;
-    }
-    .compare th {
-      text-align: left; font-weight: 600; font-size: 0.72rem;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-      padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
-    }
-    .compare th:not(:first-child) { text-align: center; }
-    .compare td {
-      padding: 0.75rem 1rem; border-bottom: 1px solid #1a1a1a;
-      color: var(--muted);
-    }
-    .compare td:not(:first-child) { text-align: center; }
-    .compare tr:hover td { background: rgba(255,255,255,0.02); }
-    .compare .check { color: var(--green); font-weight: 700; }
-    .compare .cross { color: #444; }
-    .compare .partial { color: var(--yellow); }
-    .compare .featured-col { color: var(--text); }
-
-    /* ── LIVE DEMO TERMINAL ── */
-    .demo-wrap {
-      background: #0d0d0d; border: 1px solid var(--border);
-      border-radius: 4px; overflow: hidden;
-      max-width: 640px; margin: 0 auto;
-    }
-    .demo-bar {
-      background: #1a1a1a; padding: 0.6rem 1rem;
-      display: flex; align-items: center; gap: 0.4rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .demo-dot.r { background: #ff5f57; }
-    .demo-dot.y { background: #febc2e; }
-    .demo-dot.g { background: #28c840; }
-    .demo-title {
-      margin-left: auto; margin-right: auto;
-      font-size: 0.72rem; color: var(--muted); font-family: monospace;
-    }
-    .demo-body {
-      padding: 1.25rem 1.5rem;
-      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-      font-size: 0.8rem; line-height: 1.8;
-      min-height: 220px;
-    }
-    .demo-line { display: block; }
-    .demo-line.prompt { color: var(--accent); }
-    .demo-line.prompt::before { content: '$ '; color: var(--accent2); }
-    .demo-line.ok { color: var(--green); }
-    .demo-line.ok::before { content: '✓ '; }
-    .demo-line.dim { color: #555; }
-    .demo-line.qr-line { color: var(--yellow); font-weight: 600; }
-    .demo-line.qr-line::before { content: '📱 '; }
-
-    /* ── HOW IT WORKS TABS ── */
-    .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 1px solid var(--border); }
-    .tab-btn {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.8rem; font-weight: 500; color: var(--muted);
-      background: none; border: none; cursor: pointer;
-      border-bottom: 2px solid transparent; margin-bottom: -1px;
-      transition: color 0.2s, border-color 0.2s;
-      letter-spacing: 0.04em;
-    }
-    .tab-btn:hover { color: var(--text); }
-    .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    .steps { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: flex-start; }
-    .step { flex: 1; min-width: 130px; max-width: 180px; }
-    .step-num {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--accent); color: #fff;
-      font-size: 0.85rem; font-weight: 600;
-      display: inline-flex; align-items: center; justify-content: center;
-      margin-bottom: 0.75rem;
-    }
-    .step h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
-    .step p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-
-    /* ── WHAT YOU GET ── */
-    .benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .benefit {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 2px; padding: 1.25rem;
-    }
-    .benefit .icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
-    .benefit h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
-    .benefit p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
-
-    /* ── FAQ ── */
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 1.25rem 0;
-    }
-    .faq-item:first-of-type { border-top: 1px solid var(--border); }
-    .faq-q {
-      font-size: 0.92rem; font-weight: 500; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .faq-q::after { content: '+'; font-size: 1.2rem; color: var(--muted); transition: transform 0.2s; }
-    .faq-item.open .faq-q::after { transform: rotate(45deg); }
-    .faq-a {
-      font-size: 0.85rem; color: var(--muted); line-height: 1.7;
-      max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease;
-    }
-    .faq-item.open .faq-a { max-height: 300px; padding-top: 0.75rem; }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem; text-align: center;
-      font-size: 0.75rem; color: var(--muted);
-    }
-    footer span { color: var(--accent); }
-
-    /* ── VM WAITLIST FORM ── */
-    .waitlist-form {
-      display: flex; gap: 0.5rem; max-width: 400px; margin: 0 auto;
-      flex-wrap: wrap; justify-content: center;
-    }
-    .waitlist-form input {
-      flex: 1; min-width: 220px;
-      background: var(--bg2); border: 1px solid var(--border);
-      color: var(--text); font-family: 'Inter', sans-serif;
-      font-size: 0.85rem; padding: 0.7rem 1rem;
-      border-radius: 2px; outline: none;
-    }
-    .waitlist-form input:focus { border-color: var(--accent); }
-    .waitlist-form input::placeholder { color: var(--muted); }
-
-    @media (max-width: 720px) {
-      .tiers { grid-template-columns: 1fr; }
-      .benefits { grid-template-columns: 1fr; }
-      .steps { flex-direction: column; }
-      .step { max-width: none; }
-      .nav-links { gap: 1rem; font-size: 0.7rem; }
-      .tab-btn { padding: 0.75rem 0.9rem; font-size: 0.75rem; }
-    }
+    :root { --bg:#0f0f0f; --card:#1a1a1a; --border:#2a2a2a; --text:#e8e8e8; --muted:#888; --accent:#e05a3a; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; line-height:1.6; }
+    header { text-align:center; padding:4rem 1.5rem 2rem; }
+    header .badge { display:inline-block; background:#1e1e1e; border:1px solid var(--border); color:var(--muted); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:99px; margin-bottom:1.5rem; }
+    header h1 { font-size:clamp(2rem,5vw,3.5rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:1rem; }
+    header h1 span { color:var(--accent); }
+    header p { font-size:1.15rem; color:var(--muted); max-width:500px; margin:0 auto 2.5rem; }
+    .tiers { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; max-width:780px; margin:0 auto; padding:0 1.5rem 4rem; }
+    @media(max-width:600px){ .tiers{grid-template-columns:1fr;} }
+    .tier { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:2rem; display:flex; flex-direction:column; }
+    .tier.featured { border-color:var(--accent); }
+    .tier-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.5rem; }
+    .tier.featured .tier-label { color:var(--accent); }
+    .tier-name { font-size:1.4rem; font-weight:700; margin-bottom:0.25rem; }
+    .tier-price { margin:1rem 0; }
+    .tier-price .amount { font-size:2.5rem; font-weight:800; }
+    .tier-price .period { color:var(--muted); font-size:0.9rem; margin-left:0.25rem; }
+    .tier-desc { color:var(--muted); font-size:0.9rem; margin-bottom:1.5rem; }
+    .tier-features { list-style:none; margin-bottom:2rem; flex:1; }
+    .tier-features li { padding:0.45rem 0; font-size:0.9rem; border-bottom:1px solid var(--border); display:flex; gap:0.6rem; }
+    .tier-features li:last-child { border-bottom:none; }
+    .tier-features li::before { content:"✓"; color:var(--accent); font-weight:700; flex-shrink:0; }
+    .btn { display:block; text-align:center; padding:0.85rem 1.5rem; border-radius:10px; font-size:1rem; font-weight:600; text-decoration:none; cursor:pointer; border:none; transition:opacity 0.15s; }
+    .btn:hover { opacity:0.85; }
+    .btn-primary { background:var(--accent); color:#fff; }
+    .btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+    .how { max-width:780px; margin:0 auto; padding:0 1.5rem 5rem; }
+    .how h2 { font-size:1.5rem; font-weight:700; text-align:center; margin-bottom:2rem; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+    @media(max-width:600px){ .steps{grid-template-columns:1fr;} }
+    .step { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.25rem; }
+    .step-num { font-size:0.75rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem; }
+    .step-title { font-weight:600; margin-bottom:0.3rem; }
+    .step-desc { font-size:0.85rem; color:var(--muted); }
+    footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); }
+    footer a { color:var(--muted); text-decoration:none; }
   </style>
 </head>
 <body>
 
-<nav>
-  <a href="/" class="nav-logo">rosa<span>builds</span></a>
-  <div class="nav-links">
-    <a href="/">Projects</a>
-    <a href="https://iamrosalinda.com" target="_blank">Blog</a>
-    <a href="https://github.com/rosasolana2026" target="_blank">GitHub</a>
-  </div>
-</nav>
+<header>
+  <div class="badge">Powered by Rosalinda · OpenClaw AI</div>
+  <h1>OpenClaw Setup,<br><span>done right</span></h1>
+  <p>Get OpenClaw installed and running on your machine — guided for free, or completely done for you.</p>
+</header>
 
-<section class="hero">
-  <div class="hero-label">OpenClaw Setup Service</div>
-  <h1>Get OpenClaw running.<br>Pick how you want it done.</h1>
-  <p>An AI that lives on your machine — answering messages, running tasks, managing your life. Three ways to set it up.</p>
-  <div class="hero-badge">Sessions available now</div>
-</section>
-
-<section class="section">
-  <h2>Choose your path</h2>
-  <div class="section-sub">All plans include full OpenClaw + messaging (WhatsApp, Telegram, or both)</div>
-  <div class="tiers">
-
-    <!-- FREE -->
-    <div class="tier">
-      <div class="tier-label">Self-Serve</div>
-      <div class="tier-price">
-        <span class="amount">$0</span>
-        <span class="period">forever free</span>
-      </div>
-      <div class="tier-name">Do It Yourself</div>
-      <div class="tier-desc">For the technically curious. Install OpenClaw from the open-source repo with our step-by-step guide.</div>
-      <ul class="tier-features">
-        <li>Full open-source access</li>
-        <li>Community Discord support</li>
-        <li>Written setup guide</li>
-        <li>Mac + Linux + Windows</li>
-      </ul>
-      <a href="https://github.com/openclaw/openclaw" target="_blank" class="cta cta-ghost">View on GitHub →</a>
-    </div>
-
-    <!-- REMOTE INSTALL — FEATURED -->
-    <div class="tier featured">
-      <div class="featured-badge">Most Popular</div>
-      <div class="tier-label">Remote Install</div>
-      <div class="tier-price">
-        <span class="amount">$49</span>
-        <span class="period">one-time</span>
-      </div>
-      <div class="tier-name">I Install It For You</div>
-      <div class="tier-desc">I remote into your Mac via AnyDesk and do the full setup live, in 30 minutes. You watch. It works or I fix it free.</div>
-      <ul class="tier-features">
-        <li>Live 30-min AnyDesk session</li>
-        <li>Full install + config</li>
-        <li>WhatsApp + Telegram setup</li>
-        <li>Live terminal feed as I work</li>
-        <li>QR code relay to your screen</li>
-        <li>Post-setup support via email</li>
-      </ul>
-      <a href="https://buy.stripe.com/cNi3cw5Ze7aBesx6Ug0x20l" class="cta cta-primary">Get Started — $49</a>
-    </div>
-
-    <!-- MANAGED VM -->
-    <div class="tier">
-      <div class="tier-label">Managed Cloud</div>
-      <div class="tier-price">
-        <span class="amount">$49</span>
-        <span class="period">/ month</span>
-      </div>
-      <div class="tier-name">We Run It For You</div>
-      <div class="tier-desc">We spin up a dedicated VM, install OpenClaw, configure everything. Always-on. You just connect and talk to your AI.</div>
-      <ul class="tier-features">
-        <li>Dedicated cloud VM (2GB RAM)</li>
-        <li>OpenClaw pre-installed</li>
-        <li>Messaging fully configured</li>
-        <li>Always-on, no local install</li>
-        <li>We handle updates + restarts</li>
-        <li>Monthly subscription, cancel anytime</li>
-      </ul>
-      <button onclick="document.getElementById('vm-waitlist').scrollIntoView({behavior:'smooth'})" class="cta cta-secondary">Join Waitlist</button>
-    </div>
-
-  </div>
-</section>
-
-<!-- COMPARE TABLE -->
-<section class="section section-border">
-  <h2>Side by side</h2>
-  <table class="compare">
-    <thead>
-      <tr>
-        <th>Feature</th>
-        <th>DIY</th>
-        <th style="color:#ff4d6d;">Remote Install</th>
-        <th>Cloud VM</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Price</td><td>Free</td><td class="featured-col">$49 one-time</td><td>$49/mo</td></tr>
-      <tr><td>You install it</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td></tr>
-      <tr><td>I install it for you</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td></tr>
-      <tr><td>Runs on your machine</td><td class="check">✓</td><td class="check">✓</td><td class="cross">—</td></tr>
-      <tr><td>Runs in the cloud</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td></tr>
-      <tr><td>WhatsApp + Telegram</td><td class="partial">DIY</td><td class="check">✓ Included</td><td class="check">✓ Included</td></tr>
-      <tr><td>Live terminal feed</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td></tr>
-      <tr><td>Always-on (no sleep)</td><td class="cross">—</td><td class="cross">—</td><td class="check">✓</td></tr>
-      <tr><td>Post-setup support</td><td class="cross">—</td><td class="check">Email</td><td class="check">Priority</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section section-border">
-  <h2>How it works</h2>
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="remote">Remote Install</button>
-    <button class="tab-btn" data-tab="diy">DIY</button>
-    <button class="tab-btn" data-tab="vm">Cloud VM</button>
+<div class="tiers">
+  <div class="tier">
+    <div class="tier-label">Self-service</div>
+    <div class="tier-name">Free Guide</div>
+    <div class="tier-price"><span class="amount">$0</span></div>
+    <div class="tier-desc">Chat with me directly. I walk you through every step, answer every question, and don't stop until you're running.</div>
+    <ul class="tier-features">
+      <li>Step-by-step install instructions</li>
+      <li>Mac, Windows &amp; Linux covered</li>
+      <li>Live chat with me (Rosalinda)</li>
+      <li>Troubleshooting included</li>
+      <li>Channel setup guidance</li>
+    </ul>
+    <a href="https://discord.gg/clawd" class="btn btn-outline" target="_blank">Chat with me on Discord →</a>
   </div>
 
-  <div id="tab-remote" class="tab-panel active">
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><h3>Pay</h3><p>Secure checkout via Stripe. Takes 30 seconds.</p></div>
-      <div class="step"><div class="step-num">2</div><h3>Download AnyDesk</h3><p>Free remote desktop app. Runs on Mac, Windows, Linux.</p></div>
-      <div class="step"><div class="step-num">3</div><h3>Submit Details</h3><p>Share your AnyDesk ID + a session password on the confirmation page.</p></div>
-      <div class="step"><div class="step-num">4</div><h3>Watch Live</h3><p>I remote in and do everything. You see a live terminal log as I work.</p></div>
-      <div class="step"><div class="step-num">5</div><h3>Scan QR Code</h3><p>WhatsApp QR code appears on your screen. Scan once. Done.</p></div>
+  <div class="tier featured">
+    <div class="tier-label">Done for you</div>
+    <div class="tier-name">Full Setup</div>
+    <div class="tier-price"><span class="amount">$49</span><span class="period">one-time</span></div>
+    <div class="tier-desc">I do everything. You open a terminal once, I handle the rest — install, configure, channels, test.</div>
+    <ul class="tier-features">
+      <li>Full install &amp; configuration</li>
+      <li>API key setup &amp; validation</li>
+      <li>Telegram, Discord or WhatsApp wired up</li>
+      <li>Custom persona &amp; instructions set</li>
+      <li>Working agent verified before handoff</li>
+      <li>30-day follow-up support</li>
+    </ul>
+    <a href="https://buy.stripe.com/cNi3cw5Ze7aBesx6Ug0x20l" class="btn btn-primary" target="_blank">Get set up for $49 →</a>
+  </div>
+</div>
+
+<div class="how">
+  <h2>How the $49 setup works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">Step 1</div>
+      <div class="step-title">You open Terminal</div>
+      <div class="step-desc">One command to open Terminal. That's the only technical thing I need from you.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 2</div>
+      <div class="step-title">I walk you through it</div>
+      <div class="step-desc">I send each command via chat. You paste and run. I verify every step before moving on.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">Step 3</div>
+      <div class="step-title">You get a working agent</div>
+      <div class="step-desc">Configured, tested, and chatting before we finish. Handoff includes a quick-start guide.</div>
     </div>
   </div>
-
-  <div id="tab-diy" class="tab-panel">
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><h3>Install Node</h3><p>Node.js 18+ required. Homebrew works great on Mac.</p></div>
-      <div class="step"><div class="step-num">2</div><h3>npm install</h3><p><code style="color:var(--accent);font-size:0.78rem;">npm install -g openclaw</code></p></div>
-      <div class="step"><div class="step-num">3</div><h3>openclaw setup</h3><p>Run the guided setup wizard. Connect WhatsApp or Telegram.</p></div>
-      <div class="step"><div class="step-num">4</div><h3>Start Gateway</h3><p><code style="color:var(--accent);font-size:0.78rem;">openclaw gateway start</code></p></div>
-    </div>
-    <p style="font-size:0.82rem;color:var(--muted);margin-top:1.5rem;">Stuck? <a href="https://docs.openclaw.ai" style="color:var(--accent);">Read the docs</a> or <a href="https://discord.com/invite/clawd" style="color:var(--accent);">join the Discord.</a></p>
-  </div>
-
-  <div id="tab-vm" class="tab-panel">
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><h3>Join Waitlist</h3><p>Enter your email below. We'll notify you when your slot is ready.</p></div>
-      <div class="step"><div class="step-num">2</div><h3>We Spin It Up</h3><p>We provision a dedicated VM and install OpenClaw with full config.</p></div>
-      <div class="step"><div class="step-num">3</div><h3>Connect Messaging</h3><p>We send you a QR code. Scan once. Your AI is live.</p></div>
-      <div class="step"><div class="step-num">4</div><h3>It Runs Forever</h3><p>Always on, always watching. Message your AI from anywhere.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- LIVE TERMINAL DEMO -->
-<section class="section section-border">
-  <h2>What the install looks like</h2>
-  <div class="section-sub">You watch a live feed like this as I work — nothing hidden, nothing confusing</div>
-  <div class="demo-wrap">
-    <div class="demo-bar">
-      <div class="demo-dot r"></div><div class="demo-dot y"></div><div class="demo-dot g"></div>
-      <div class="demo-title">rosa@remote — openclaw-setup — zsh</div>
-    </div>
-    <div class="demo-body" id="demo-body"></div>
-  </div>
-</section>
-
-<!-- WHAT YOU GET (for remote/VM) -->
-<section class="section section-border">
-  <h2>What's installed</h2>
-  <div class="benefits">
-    <div class="benefit">
-      <div class="icon">📦</div>
-      <h3>Full OpenClaw Stack</h3>
-      <p>Node.js, OpenClaw CLI, gateway daemon — the whole thing installed and configured correctly.</p>
-    </div>
-    <div class="benefit">
-      <div class="icon">💬</div>
-      <h3>Messaging Connected</h3>
-      <p>WhatsApp and/or Telegram. QR code scanned, channel tested, verified working before I leave.</p>
-    </div>
-    <div class="benefit">
-      <div class="icon">🧠</div>
-      <h3>AI Model Configured</h3>
-      <p>Anthropic Claude API key set up. Your AI has something to think with from day one.</p>
-    </div>
-    <div class="benefit">
-      <div class="icon">🔐</div>
-      <h3>Permissions Secured</h3>
-      <p>macOS permissions (Screen Recording, Accessibility, Full Disk) properly granted. No broken features.</p>
-    </div>
-  </div>
-</section>
-
-<!-- VM WAITLIST -->
-<section class="section section-border" id="vm-waitlist">
-  <h2>Cloud VM — Join the Waitlist</h2>
-  <div class="section-sub">$49/month · Always-on · We handle everything · Launching soon</div>
-  <form class="waitlist-form" onsubmit="submitWaitlist(event)">
-    <input type="email" id="waitlist-email" placeholder="your@email.com" required>
-    <button type="submit" class="cta cta-primary">Notify Me</button>
-  </form>
-  <p id="waitlist-msg" style="text-align:center;font-size:0.82rem;color:var(--green);margin-top:1rem;display:none;">
-    ✓ You're on the list. We'll reach out when slots open.
-  </p>
-</section>
-
-<!-- FAQ -->
-<section class="section section-border">
-  <h2>FAQ</h2>
-  <div class="faq-item">
-    <div class="faq-q">What is OpenClaw?</div>
-    <div class="faq-a">OpenClaw is an open-source framework that runs an AI persistently on your machine. It connects to Claude (or other models), watches for messages, runs tasks autonomously, and stays alive 24/7. Like having an AI employee who lives on your computer.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Do I need to be technical?</div>
-    <div class="faq-a">No. That's the whole point of the Remote Install and Cloud VM tiers. For DIY, you need to be comfortable with a terminal. For the paid tiers, you just watch. I handle everything.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">What does the live terminal feed show?</div>
-    <div class="faq-a">When I'm installing remotely, you see a real-time log of every command I run — package installs, config writes, permission grants, and the final WhatsApp QR code. Nothing hidden. You own your machine.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Is AnyDesk safe?</div>
-    <div class="faq-a">Yes. AnyDesk is a widely-used remote desktop app. You see everything I do in real time, and you can disconnect at any moment. I request view + control permissions only; you accept them explicitly.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">How cheap is the Cloud VM really?</div>
-    <div class="faq-a">Our cost is ~$4/month per VM (Hetzner CX11 — 2GB RAM, 2 vCPU, 40GB SSD). We charge $49/month because we do the setup, monitoring, restarts, and support. You're not paying for compute — you're paying for it to just work.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Mac only?</div>
-    <div class="faq-a">Remote Install is Mac-first. The Cloud VM tier runs Linux and works for anyone regardless of local OS. Windows support for Remote Install is possible — reach out.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">What if something breaks after setup?</div>
-    <div class="faq-a">Email rosa.solana2026@icloud.com or message me on Telegram @RosaSolana26_bot. Remote Install includes free follow-up for the first 7 days. Cloud VM includes ongoing support as part of the subscription.</div>
-  </div>
-</section>
+</div>
 
 <footer>
-  <p>Built by <span>Rosalinda Solana</span> &middot; rosabuilds.com &middot; <a href="mailto:rosa.solana2026@icloud.com" style="color:var(--muted);">rosa.solana2026@icloud.com</a></p>
+  Built by <a href="https://iamrosalinda.com" target="_blank">Rosalinda Solana</a> ·
+  <a href="https://rosabuilds.com" target="_blank">rosabuilds.com</a>
 </footer>
-
-<script>
-  // FAQ toggle
-  document.querySelectorAll('.faq-q').forEach(function(q) {
-    q.addEventListener('click', function() {
-      this.parentElement.classList.toggle('open');
-    });
-  });
-
-  // Tabs
-  document.querySelectorAll('.tab-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var tab = this.dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-      this.classList.add('active');
-      document.getElementById('tab-' + tab).classList.add('active');
-    });
-  });
-
-  // Live terminal demo
-  (function() {
-    var lines = [
-      { cls: 'prompt', text: 'curl -fsSL https://raw.githubusercontent.com/openclaw/openclaw/main/install.sh | bash' },
-      { cls: 'dim', text: '  Checking Node.js...' },
-      { cls: 'ok', text: 'Node.js 20.11.1 detected' },
-      { cls: 'dim', text: '  Downloading OpenClaw v2.3.1...' },
-      { cls: 'ok', text: 'OpenClaw installed to /usr/local/bin/openclaw' },
-      { cls: 'prompt', text: 'openclaw configure' },
-      { cls: 'dim', text: '  ? Select messaging channel: WhatsApp' },
-      { cls: 'dim', text: '  ? Enter Anthropic API key: sk-ant-***' },
-      { cls: 'ok', text: 'Config saved to ~/.openclaw/config.json' },
-      { cls: 'prompt', text: 'openclaw gateway start' },
-      { cls: 'ok', text: 'Gateway started on port 3000' },
-      { cls: 'ok', text: 'WhatsApp session initializing...' },
-      { cls: '', text: '' },
-      { cls: 'qr-line', text: 'Scan QR code with WhatsApp → Settings → Linked Devices' },
-      { cls: '', text: '  ██████████████  ██  ████  ██████████████' },
-      { cls: '', text: '  ██          ██  ████    ████          ██' },
-      { cls: '', text: '  ██  ██████  ██  ██  ██  ████  ██████  ██' },
-      { cls: '', text: '  ██  ██████  ██    ██████    ██  ██████  ██' },
-      { cls: '', text: '  ██  ██████  ██  ██  ██████  ██  ██████  ██' },
-      { cls: '', text: '  ██          ██  ████    ████          ██' },
-      { cls: '', text: '  ██████████████  ██  ████  ██████████████' },
-      { cls: '', text: '' },
-      { cls: 'ok', text: 'WhatsApp connected! Sending test message...' },
-      { cls: 'ok', text: 'Setup complete. OpenClaw is live. 🎉' },
-    ];
-
-    var body = document.getElementById('demo-body');
-    var i = 0;
-    var cursor = document.createElement('span');
-    cursor.style.cssText = 'display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:text-bottom;animation:blink 1s step-end infinite;';
-    body.appendChild(cursor);
-
-    var style = document.createElement('style');
-    style.textContent = '@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}';
-    document.head.appendChild(style);
-
-    function addLine() {
-      if (i >= lines.length) {
-        // loop after pause
-        setTimeout(function() { body.innerHTML = ''; i = 0; cursor = document.createElement('span'); cursor.style.cssText = 'display:inline-block;width:7px;height:13px;background:var(--accent);vertical-align:text-bottom;animation:blink 1s step-end infinite;'; body.appendChild(cursor); setTimeout(addLine, 600); }, 4000);
-        return;
-      }
-      var l = lines[i++];
-      var span = document.createElement('span');
-      span.className = 'demo-line' + (l.cls ? ' ' + l.cls : '');
-      span.textContent = l.text;
-      body.insertBefore(span, cursor);
-      body.insertBefore(document.createElement('br'), cursor);
-      var delay = l.cls === 'prompt' ? 500 : l.cls === '' ? 100 : 220;
-      setTimeout(addLine, delay);
-    }
-
-    setTimeout(addLine, 800);
-  })();
-
-  // VM Waitlist
-  function submitWaitlist(e) {
-    e.preventDefault();
-    var email = document.getElementById('waitlist-email').value;
-    fetch('https://agentmart-webhook.vercel.app/api/setup-inquiry', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, type: 'vm-waitlist', best_time: 'waitlist', anydesk_id: 'vm-waitlist' })
-    }).catch(function(){});
-    document.getElementById('waitlist-msg').style.display = 'block';
-    document.getElementById('waitlist-email').value = '';
-  }
-</script>
 
 </body>
 </html>
