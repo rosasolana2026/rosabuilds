@@ -89,7 +89,17 @@
   <script>
     const params = new URLSearchParams(location.search);
     if (params.get('api')) { localStorage.setItem('ab_api', params.get('api')); }
-    const API_BASE = localStorage.getItem('ab_api') || 'https://contrary-theaters-candles-geology.trycloudflare.com'; // temp: tunnel; will swap to here.now URL
+    let API_BASE = localStorage.getItem('ab_api') || '';
+    async function resolveApi(){
+      if(API_BASE) return API_BASE;
+      try{
+        const r = await fetch('/auto-builder/endpoint.json', { cache: 'no-store' });
+        if(r.ok){ const j = await r.json(); if(j && j.submit){ API_BASE = j.submit; localStorage.setItem('ab_api', API_BASE); return API_BASE; } }
+      }catch(e){}
+      API_BASE = 'https://contrary-theaters-candles-geology.trycloudflare.com'; // fallback temp tunnel
+      localStorage.setItem('ab_api', API_BASE);
+      return API_BASE;
+    }
     const form = document.getElementById('intake');
     const ok = document.getElementById('ok');
     const jobSpan = document.getElementById('jobId');
@@ -97,7 +107,8 @@
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
       try {
-        const r = await fetch(`${API_BASE}/submit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+        const base = await resolveApi();
+        const r = await fetch(`${base}/submit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
         if(!r.ok) throw new Error('Submit failed');
         const j = await r.json();
         if(j && j.jobId){ jobSpan.textContent = j.jobId; ok.style.display='block'; form.reset(); }
