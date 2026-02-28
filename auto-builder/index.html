@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Auto‑Builder · RosaBuilds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#fffaf4; --fg:#1b1b1b; --accent:#c25d3a; --muted:#6b6b6b; --card:#ffffff; --border:#eee2d9; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    header{padding:20px 24px;border-bottom:1px solid var(--border);background:var(--card)}
+    .nav{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:800;letter-spacing:.2px}
+    .brand a{color:var(--fg);text-decoration:none}
+    .nav a{color:var(--fg);text-decoration:none;margin-left:16px}
+    .container{max-width:980px;margin:0 auto;padding:40px 24px}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
+    .hero h1{font-size:38px;line-height:1.1;margin:0 0 12px}
+    .hero p{font-size:18px;color:var(--muted);margin:0 0 24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+    form{padding:20px}
+    label{font-weight:600;font-size:14px;display:block;margin:14px 0 6px}
+    input,select,textarea{width:100%;padding:12px 12px;border:1px solid var(--border);border-radius:10px;font-size:15px;background:#fff}
+    textarea{min-height:120px;resize:vertical}
+    button{margin-top:14px;background:var(--accent);border:none;color:#fff;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px}
+    .faq{margin-top:36px}
+    .faq h3{margin:8px 0;font-size:18px}
+    .success{padding:16px;border-radius:10px;background:#e9f7ef;border:1px solid #cfead9;color:#0d5a32;margin-top:12px;display:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand"><a href="/">RosaBuilds</a></div>
+      <nav>
+        <a href="/marketplace/">AgentMart</a>
+        <a href="/openclaw-setup/">OpenClaw Setup</a>
+        <a href="/auto-builder/" style="font-weight:700;color:var(--accent)">Auto‑Builder</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>From idea → live site in hours, not weeks</h1>
+        <p>Tell me what you need. I’ll generate a polished site (marketing or simple app), wire GitHub Pages, and email you the repo + instructions. Zero cost stack.</p>
+        <div class="faq card" style="padding:18px">
+          <h3>What you get</h3>
+          <ul>
+            <li>Custom copy + design based on your brief</li>
+            <li>GitHub repo + Pages deploy</li>
+            <li>Optional simple app (one CRUD resource)</li>
+          </ul>
+          <div class="muted">Turnaround: typically same‑day for landing pages.</div>
+        </div>
+      </div>
+      <div class="card">
+        <form id="intake">
+          <h3 style="margin:6px 0 10px">Start a build</h3>
+          <label for="name">Your name</label>
+          <input id="name" name="name" placeholder="Alex Founder" required>
+
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" placeholder="you@example.com" required>
+
+          <label for="desc">Short project description</label>
+          <textarea id="desc" name="description" placeholder="What are we building?" required></textarea>
+
+          <label for="domain">Target domain (optional)</label>
+          <input id="domain" name="domain" placeholder="example.com (optional)">
+
+          <label for="template">Preferred template</label>
+          <select id="template" name="template" required>
+            <option value="marketing-site">Marketing site</option>
+            <option value="simple-app">Simple app (one resource)</option>
+          </select>
+
+          <button type="submit">Submit</button>
+          <div id="ok" class="success">Thanks! Your Job ID is <span id="jobId"></span>. I’ll email you shortly.</div>
+          <div class="muted">No payment now. I’ll confirm scope and timeline first.</div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script>
+    const API_BASE = localStorage.getItem('ab_api') || 'http://127.0.0.1:8787'; // swap to here.now at deploy
+    const form = document.getElementById('intake');
+    const ok = document.getElementById('ok');
+    const jobSpan = document.getElementById('jobId');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      try {
+        const r = await fetch(`${API_BASE}/submit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+        if(!r.ok) throw new Error('Submit failed');
+        const j = await r.json();
+        if(j && j.jobId){ jobSpan.textContent = j.jobId; ok.style.display='block'; form.reset(); }
+      } catch(err){ alert('Submission failed. Please try again later.'); }
+    });
+  </script>
+</body>
+</html>
