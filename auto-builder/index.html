@@ -87,6 +87,8 @@
     </section>
   </main>
   <script>
+    const params = new URLSearchParams(location.search);
+    if (params.get('api')) { localStorage.setItem('ab_api', params.get('api')); }
     const API_BASE = localStorage.getItem('ab_api') || 'https://contrary-theaters-candles-geology.trycloudflare.com'; // temp: tunnel; will swap to here.now URL
     const form = document.getElementById('intake');
     const ok = document.getElementById('ok');
