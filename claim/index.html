@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Claim Your Site · RosaBuilds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#fffaf4;--fg:#1b1b1b;--muted:#6b6b6b;--card:#fff;--border:#eee2d9;--accent:#9b3060}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    .wrap{max-width:780px;margin:0 auto;padding:28px 18px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+    h1{font-size:28px;margin:4px 0 10px}
+    p{color:var(--muted)}
+    label{display:block;margin:12px 0 6px;font-weight:600}
+    input,textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:15px;background:#fff}
+    textarea{min-height:120px}
+    button{margin-top:14px;background:var(--accent);border:none;color:#fff;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer}
+    .ok{margin-top:12px;padding:12px;border-radius:10px;background:#e9f7ef;border:1px solid #cfead9;color:#0d5a32;display:none}
+    .note{font-size:13px;color:var(--muted)}
+    .banner{background:#fff;border:1px solid var(--border);padding:10px;border-radius:10px;margin-bottom:14px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner"><strong>RosaBuilds</strong> · Claim your preview and go live today. No payment required here — I’ll confirm details first, then send a Stripe link.</div>
+    <h1>Claim your site</h1>
+    <p id="pv">Preview: <em>(detecting…)</em></p>
+    <div class="card">
+      <form id="claim">
+        <input type="hidden" id="preview" name="preview" value="">
+        <label>Your name</label>
+        <input name="name" required placeholder="Alex Founder">
+        <label>Email</label>
+        <input type="email" name="email" required placeholder="you@example.com">
+        <label>Business name</label>
+        <input name="business" placeholder="Your LLC / Shop name">
+        <label>Preferred domain (optional)</label>
+        <input name="domain" placeholder="example.com (optional)">
+        <label>Anything else?</label>
+        <textarea name="notes" placeholder="Logos, hours, copy tweaks…"></textarea>
+        <button type="submit">Submit claim</button>
+        <div id="ok" class="ok">Thanks! Your claim ID is <span id="job"></span>. I’ll email you shortly.</div>
+        <div class="note">We’ll verify ownership by email reply before anything goes live.</div>
+      </form>
+    </div>
+  </div>
+  <script>
+    // Resolve API (reuse /auto-builder/endpoint.json; allow ?api override)
+    const params = new URLSearchParams(location.search);
+    const pvSpan = document.getElementById('pv');
+    const pvInput = document.getElementById('preview');
+    const pv = params.get('preview') || '';
+    if (pv) { pvSpan.innerHTML = 'Preview: <code>'+pv+'</code>'; pvInput.value = pv; }
+    async function resolveApi(){
+      const override = params.get('api') || localStorage.getItem('ab_api');
+      if (override) return override;
+      try{
+        const r = await fetch('/auto-builder/endpoint.json', {cache:'no-store'});
+        if(r.ok){ const j = await r.json(); if(j && j.submit){ localStorage.setItem('ab_api', j.submit); return j.submit; } }
+      }catch(e){}
+      return 'https://contrary-theaters-candles-geology.trycloudflare.com';
+    }
+    const form = document.getElementById('claim');
+    const ok = document.getElementById('ok');
+    const jobEl = document.getElementById('job');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      const desc = `Claim request for ${data.preview||'(unknown)'}\nBusiness: ${data.business||''}\nNotes: ${data.notes||''}`;
+      try{
+        const base = await resolveApi();
+        const r = await fetch(`${base.replace(/\/$/,'')}/submit`,{
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ name: data.name, email: data.email, description: desc, domain: data.domain||'', template: 'marketing-site' })
+        });
+        if(!r.ok) throw new Error('Submit failed');
+        const j = await r.json();
+        if(j && j.jobId){ jobEl.textContent = j.jobId; ok.style.display='block'; form.reset(); }
+      }catch(err){ alert('Submission failed. Please try again later.'); }
+    });
+  </script>
+</body>
+</html>
