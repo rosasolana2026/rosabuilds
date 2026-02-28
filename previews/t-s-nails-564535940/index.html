@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>T&S Nails</title>
+  <meta name="description" content="Get booked online and on Google" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#faf6f1;--card:#fff;--text:#1c1410;--muted:#7a6a5e;--rose:#9b3060;--border:#e8ddd4}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;}
+    .wrap{max-width:900px;margin:0 auto;padding:2rem 1.25rem}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem}
+    .logo{font-weight:600;letter-spacing:.02em}
+    nav a{color:var(--muted);text-decoration:none;margin-left:1rem}
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center}
+    .hero h1{font-size:2.2rem;margin:.25rem 0}
+    .hero p{color:var(--muted)}
+    .cta{display:inline-block;background:var(--rose);color:#fff;padding:.75rem 1rem;border-radius:8px;text-decoration:none;margin-top:1rem}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-top:2rem}
+    .features{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    footer{margin:3rem 0 1rem;color:var(--muted);font-size:.9rem}
+    @media(max-width:720px){.hero{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">T&S Nails</div>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">New</div>
+        <h1>T&S Nails</h1>
+        <p>Get booked online and on Google</p>
+        <a class="cta" href="#contact">Get Started</a>
+      </div>
+      <div class="card">
+        <strong>Who it's for</strong>
+        <p>Local customers in Austin</p>
+        <strong>Goal</strong>
+        <p>Get booked online and on Google</p>
+      </div>
+    </section>
+
+    <section id="features" class="card">
+      <h2>Features</h2>
+      <div class="features">
+        <div class="card"><strong>Fast</strong><p>Get booked online and on Google</p></div>
+<div class="card"><strong>Simple</strong><p>Get booked online and on Google</p></div>
+<div class="card"><strong>Responsive</strong><p>Get booked online and on Google</p></div>
+<div class="card"><strong>SEO-ready</strong><p>Get booked online and on Google</p></div>
+      </div>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <p>Email us at leads-demo@rosabuilds.com to get started.</p>
+    </section>
+
+    <footer>
+      Built by Auto‑Builder • T&S Nails
+    </footer>
+  </div>
+</body>
+</html>
