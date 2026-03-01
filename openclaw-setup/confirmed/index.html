@@ -722,6 +722,11 @@
       var proxy = 'https://agentmart-webhook.vercel.app/api/onboard-proxy';
       var direct = 'https://examine-violation-tan-beach.trycloudflare.com/onboard';
       fetch(proxy, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function(r){
+          if (!r || !r.ok) {
+            return fetch(direct, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          }
+        })
         .catch(function(){
           fetch(direct, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function(){});
         });
