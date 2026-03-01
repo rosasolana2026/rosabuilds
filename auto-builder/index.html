@@ -111,7 +111,7 @@
         const r = await fetch(`${base}/submit`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
         if(!r.ok) throw new Error('Submit failed');
         const j = await r.json();
-        if(j && j.jobId){ jobSpan.textContent = j.jobId; ok.style.display='block'; form.reset(); }
+        if(j && j.jobId){ jobSpan.textContent = j.jobId; ok.style.display='block'; const id = encodeURIComponent(j.jobId); setTimeout(()=>{ location.href = '/auto-builder/thanks.html?jobId=' + id; }, 800); }
       } catch(err){ alert('Submission failed. Please try again later.'); }
     });
   </script>
