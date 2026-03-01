@@ -710,26 +710,30 @@
       body: JSON.stringify(data)
     }).catch(function(){});
 
-    // Also enqueue a provisioning plan (dry-run) via Rosa's intake
+    // Email verification: prompt for the 6-digit code, then enqueue with code in notes
     (function(){
-      var payload = {
-        email: data.email || '',
-        customerName: (data.email||'').split('@')[0] || 'OpenClaw Setup Customer',
-        product: 'openclaw-setup',
-        domainHint: '',
-        notes: 'anydesk_id='+ (data.anydesk_id||'') + '; anydesk_pw=' + (data.anydesk_pw||'') + '; best_time=' + (data.best_time||'') + '; messaging=' + (data.messaging||'')
-      };
-      var proxy = 'https://agentmart-webhook.vercel.app/api/onboard-proxy';
-      var direct = 'https://examine-violation-tan-beach.trycloudflare.com/onboard';
-      fetch(proxy, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-        .then(function(r){
-          if (!r || !r.ok) {
-            return fetch(direct, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-          }
-        })
-        .catch(function(){
-          fetch(direct, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function(){});
-        });
+      try {
+        var code = window.prompt('Enter the 6-digit code emailed to you');
+        if (!code || !/^\d{6}$/.test(code)) return; // user canceled or invalid
+        var payload = {
+          email: data.email || '',
+          customerName: (data.email||'').split('@')[0] || 'OpenClaw Setup Customer',
+          product: 'openclaw-setup',
+          domainHint: '',
+          notes: 'anydesk_id='+ (data.anydesk_id||'') + '; anydesk_pw=' + (data.anydesk_pw||'') + '; best_time=' + (data.best_time||'') + '; messaging=' + (data.messaging||'') + '; code=' + code
+        };
+        var proxy = 'https://agentmart-webhook.vercel.app/api/onboard-proxy';
+        var direct = 'https://examine-violation-tan-beach.trycloudflare.com/onboard';
+        fetch(proxy, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+          .then(function(r){
+            if (!r || !r.ok) {
+              return fetch(direct, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            }
+          })
+          .catch(function(){
+            fetch(direct, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function(){});
+          });
+      } catch (e) {}
     })();
 
     // Show success regardless (don\'t fail the user if fetch errors)
