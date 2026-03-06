@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Operator Starter Kit — Deploy an AI that works while you sleep</title>
+  <meta name="description" content="5 production-ready templates to deploy your own AI operator in 30 minutes. $29." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1f1f1f;
+      --text: #f0f0f0;
+      --muted: #888;
+      --accent: #7c6dfa;
+      --accent-hover: #9b8dfb;
+      --green: #22c55e;
+      --font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-brand:hover { color: var(--text); }
+    .nav-price {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 0 72px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(124, 109, 250, 0.1);
+      border: 1px solid rgba(124, 109, 250, 0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 7vw, 54px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #7c6dfa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-price {
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .cta-note {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .cta-note span {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── What's Inside ── */
+    .section {
+      padding: 64px 0;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    .kit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .kit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      transition: border-color 0.15s;
+    }
+    .kit-item:hover { border-color: #333; }
+    .kit-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: rgba(124, 109, 250, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .kit-body {}
+    .kit-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .kit-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── How It Works ── */
+    .steps {
+      counter-reset: steps;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .step {
+      counter-increment: steps;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-text {
+      font-size: 15px;
+      color: var(--text);
+      padding-top: 2px;
+    }
+    .step-text strong { color: #fff; }
+
+    /* ── Proof / Quote ── */
+    .proof {
+      padding: 48px 0;
+    }
+    .quote-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 28px;
+    }
+    .quote-text {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text);
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+    .quote-attr {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .quote-attr strong { color: var(--text); }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      padding: 72px 0 80px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(28px, 5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .cta-section p {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+    .price-callout {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    .price-amount {
+      font-size: 52px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+    }
+    .price-currency {
+      font-size: 24px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .price-label {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+    }
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .footer-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .footer-link:hover { color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .hero { padding: 56px 0 56px; }
+      .section { padding: 48px 0; }
+      .btn-primary { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="/" class="nav-brand">AI Operator Starter Kit</a>
+      <div class="nav-price">$29 one-time</div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Digital Product for AI Founders &amp; Devs</div>
+      <h1>Run an AI operator that<br /><span>works while you sleep</span></h1>
+      <p class="hero-sub">
+        5 production-ready templates — SOUL, RULES, HEARTBEAT, AGENTS, and a step-by-step setup guide. Deploy your own AI operator in 30 minutes.
+      </p>
+      <div class="cta-group">
+        <a href="https://buy.stripe.com/28EfZi3R652t0BH3I40x20o" class="btn-primary">
+          Get the Kit
+          <span class="btn-price">$29</span>
+        </a>
+        <p class="cta-note"><span>Instant download</span> &nbsp;·&nbsp; PDF + all 5 templates</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- What's Inside -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">What's in the kit</p>
+      <h2 class="section-title">Everything you need to go from zero to operator</h2>
+      <p class="section-sub">No boilerplate. No guesswork. Each file is pre-structured, annotated, and ready to fill in.</p>
+
+      <ul class="kit-list">
+        <li class="kit-item">
+          <div class="kit-icon">🧠</div>
+          <div class="kit-body">
+            <div class="kit-name">SOUL.md</div>
+            <div class="kit-desc">Blank template for your operator's identity, mission, values, voice, and scope. This is the foundation everything else is built on.</div>
+          </div>
+        </li>
+        <li class="kit-item">
+          <div class="kit-icon">📋</div>
+          <div class="kit-body">
+            <div class="kit-name">RULES.md</div>
+            <div class="kit-desc">8 key operating rules pre-filled — covering confirmation, escalation, privacy, logging, and graceful failure. Customize in minutes.</div>
+          </div>
+        </li>
+        <li class="kit-item">
+          <div class="kit-icon">⚡</div>
+          <div class="kit-body">
+            <div class="kit-name">HEARTBEAT.md</div>
+            <div class="kit-desc">Template for autonomous execution loops. Define what runs on a schedule, what it reads, what it produces, and when to escalate.</div>
+          </div>
+        </li>
+        <li class="kit-item">
+          <div class="kit-icon">🤝</div>
+          <div class="kit-body">
+            <div class="kit-name">AGENTS.md</div>
+            <div class="kit-desc">Multi-agent routing map with agent registry, input/output formats, and routing logic. Built for when you scale to a team of AI workers.</div>
+          </div>
+        </li>
+        <li class="kit-item">
+          <div class="kit-icon">🚀</div>
+          <div class="kit-body">
+            <div class="kit-name">Setup Guide</div>
+            <div class="kit-desc">"How to Deploy Your AI Operator in 30 Minutes" — 6-step walkthrough for Claude, GPT-4, and API setups. Includes a test checklist and week-1 plan.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- How It Works -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">How it works</p>
+      <h2 class="section-title">From download to deployed in 30 minutes</h2>
+      <p class="section-sub">Follow the guide. Fill in the templates. Load into your AI of choice.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Define the soul.</strong> Fill in your operator's name, mission, scope, and voice. 8 minutes.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Set the rules.</strong> Review the 8 pre-filled rules. Add 1-2 custom rules for your business. 5 minutes.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Configure one heartbeat loop.</strong> Pick your most valuable recurring task. Define what runs, when, and what it produces. 7 minutes.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Deploy.</strong> Upload files to Claude, GPT-4, or your API setup. Paste the system prompt. Run your first test. 10 minutes.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- Quote -->
+  <div class="proof">
+    <div class="container">
+      <div class="quote-card">
+        <p class="quote-text">"Most people try to build AI operators from scratch and give up halfway. The missing piece isn't the model — it's the structure. Give the AI a soul, a rulebook, and a heartbeat, and it'll run your business while you're asleep."</p>
+        <p class="quote-attr"><strong>Rosalinda Solana</strong> &nbsp;·&nbsp; iamrosalinda.com</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- Final CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to deploy your operator?</h2>
+      <p>One-time purchase. Instant download. Works with Claude, GPT-4, and any API setup.</p>
+      <div class="price-callout">
+        <span class="price-currency">$</span>
+        <span class="price-amount">29</span>
+      </div>
+      <br />
+      <div class="cta-group">
+        <a href="https://buy.stripe.com/28EfZi3R652t0BH3I40x20o" class="btn-primary">
+          Get the AI Operator Starter Kit
+          <span class="btn-price">$29</span>
+        </a>
+        <p class="cta-note"><span>Instant download</span> &nbsp;·&nbsp; PDF + 5 templates &nbsp;·&nbsp; No subscription</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p class="footer-copy">Built by <a href="https://iamrosalinda.com" class="footer-link" target="_blank" rel="noopener">Rosalinda Solana</a> &nbsp;·&nbsp; iamrosalinda.com</p>
+      <p class="footer-copy">AI Operator Starter Kit &copy; 2026</p>
+    </div>
+  </footer>
+
+</body>
+</html>
