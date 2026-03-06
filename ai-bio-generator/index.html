@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free AI Bio Generator — Write a Professional Bio in Seconds</title>
+  <meta name="description" content="Free AI bio generator. Enter your name, job title, and skills — get a polished 150-word professional bio instantly. No sign-up. No credit card. Powered by AI.">
+  <meta name="keywords" content="ai bio generator, professional bio generator, free bio generator, write my bio, ai write bio, linkedin bio generator">
+  <link rel="canonical" href="https://rosabuilds.com/ai-bio-generator/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rosabuilds.com/ai-bio-generator/">
+  <meta property="og:title" content="Free AI Bio Generator — Professional Bio in Seconds">
+  <meta property="og:description" content="Enter your name, job title, and skills. Get a polished ~150-word bio instantly. Free, no sign-up required.">
+  <meta property="og:image" content="https://rosabuilds.com/ai-bio-generator/og.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free AI Bio Generator">
+  <meta name="twitter:description" content="Get a polished professional bio in seconds. Free, no sign-up.">
+  <meta name="twitter:image" content="https://rosabuilds.com/ai-bio-generator/og.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #faf6f1;
+      --white:      #ffffff;
+      --parchment:  #f2ece4;
+      --border:     #e8ddd4;
+      --border2:    #d4c8bc;
+      --text:       #1c1410;
+      --muted:      #7a6a5e;
+      --faint:      #b0a49a;
+      --rose:       #9b3060;
+      --rose2:      #c2476e;
+      --rose-bg:    rgba(155,48,96,0.07);
+      --rose-ring:  rgba(155,48,96,0.2);
+      --gold:       #b08d57;
+      --shadow:     0 12px 48px rgba(28,20,16,0.08);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+    a { color: var(--rose); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(250,246,241,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-style: italic; color: var(--text);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-logo .dot { color: var(--rose); }
+    .nav-back {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .nav-back:hover { color: var(--rose); text-decoration: none; }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 64px 5% 20px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--rose-bg);
+      border: 1px solid var(--rose-ring);
+      color: var(--rose);
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 4px 14px; border-radius: 100px;
+      margin-bottom: 22px;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      font-weight: 600; line-height: 1.1; letter-spacing: -0.01em;
+      color: var(--text); max-width: 700px; margin: 0 auto 16px;
+    }
+    h1 em { font-style: italic; color: var(--rose); }
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      color: var(--muted); max-width: 520px; margin: 0 auto 48px;
+      line-height: 1.8; font-weight: 300;
+    }
+
+    /* ── CARD ── */
+    main { flex: 1; padding: 0 5% 72px; }
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 40px 44px;
+      box-shadow: var(--shadow);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* ── FORM ── */
+    .row { margin-bottom: 26px; }
+    .row:last-child { margin-bottom: 0; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    label {
+      display: block;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 8px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      font-size: 0.97rem; font-weight: 300;
+      font-family: 'Inter', sans-serif;
+      color: var(--text); background: var(--parchment);
+      transition: border-color .18s, box-shadow .18s;
+      outline: none; resize: none;
+    }
+    input[type="text"]::placeholder,
+    textarea::placeholder { color: var(--faint); }
+    input[type="text"]:focus, textarea:focus {
+      border-color: var(--rose);
+      box-shadow: 0 0 0 3px var(--rose-ring);
+      background: var(--white);
+    }
+
+    /* ── TONE PILLS ── */
+    .tones { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tone-pill {
+      padding: 9px 18px;
+      border: 1px solid var(--border2);
+      border-radius: 100px; background: var(--parchment);
+      font-size: 0.84rem; font-weight: 500; color: var(--muted);
+      cursor: pointer; transition: all .15s; user-select: none;
+    }
+    .tone-pill:hover { border-color: var(--rose2); color: var(--rose2); }
+    .tone-pill.active {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: #fff; font-weight: 600;
+    }
+
+    /* ── BUTTON ── */
+    .btn-generate {
+      width: 100%;
+      margin-top: 10px;
+      padding: 16px;
+      background: var(--rose);
+      color: #fff; border: none;
+      border-radius: 10px;
+      font-size: 1rem; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background .18s, transform .1s, box-shadow .15s;
+    }
+    .btn-generate:hover:not(:disabled) {
+      background: var(--rose2);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(155,48,96,0.22);
+    }
+    .btn-generate:active:not(:disabled) { transform: none; }
+    .btn-generate:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* ── SPINNER ── */
+    .spinner {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin .65s linear infinite;
+      vertical-align: middle; margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── OUTPUT ── */
+    .output-wrap {
+      margin-top: 32px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      animation: fadeIn .3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .output-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .output-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--rose);
+    }
+    .word-count {
+      font-size: 0.72rem; color: var(--faint); font-weight: 400;
+    }
+    .output-box {
+      background: var(--parchment);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.08rem; line-height: 1.85;
+      color: var(--text); white-space: pre-wrap;
+    }
+    .action-row {
+      display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;
+    }
+    .btn-copy, .btn-regen {
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 0.82rem; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer; transition: all .15s;
+    }
+    .btn-copy {
+      background: var(--rose); color: #fff; border: none;
+    }
+    .btn-copy:hover { background: var(--rose2); }
+    .btn-regen {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+    }
+    .btn-regen:hover { border-color: var(--rose); color: var(--rose); }
+
+    /* ── ERROR ── */
+    .error {
+      margin-top: 16px;
+      background: #fdf2f7; border: 1px solid #f0c0d4;
+      color: #8b1a3a; font-size: 0.88rem;
+      border-radius: 8px; padding: 12px 16px;
+    }
+
+    /* ── BELOW FOLD ── */
+    .below { max-width: 700px; margin: 48px auto 0; }
+
+    .features {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 16px; margin-bottom: 48px;
+    }
+    .feat {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 20px;
+    }
+    .feat-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .feat h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 600; margin-bottom: 6px;
+    }
+    .feat p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+
+    .tips {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 36px; margin-bottom: 48px;
+    }
+    .tips h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+    .tips ol { padding-left: 20px; }
+    .tips li { font-size: 0.9rem; color: var(--muted); margin-bottom: 12px; line-height: 1.7; }
+    .tips li strong { color: var(--text); font-weight: 600; }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding: 24px 5%;
+      text-align: center;
+      font-size: 0.78rem; color: var(--faint);
+    }
+    footer a { color: var(--rose); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .card { padding: 28px 22px; }
+      .two-col { grid-template-columns: 1fr; }
+      .tips { padding: 24px 20px; }
+      nav { padding: 0 4%; }
+      .hero { padding: 44px 4% 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">rosa<span class="dot">.</span>builds</div>
+  <a href="https://rosabuilds.com" class="nav-back">← All tools</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Free Tool</div>
+  <h1>Your professional bio,<br><em>written by AI</em></h1>
+  <p class="hero-sub">Enter your details and get a polished ~150-word bio in seconds. Professional, casual, or bold — you choose the tone. No sign-up required.</p>
+</div>
+
+<main>
+  <div class="card">
+    <form id="bioForm" autocomplete="off">
+
+      <div class="two-col row">
+        <div>
+          <label for="name">Full name</label>
+          <input type="text" id="name" placeholder="e.g. Rosalinda Solana" required>
+        </div>
+        <div>
+          <label for="title">Job title</label>
+          <input type="text" id="title" placeholder="e.g. Founder & AI Builder" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="skills">Key skills / specialisms</label>
+        <input type="text" id="skills" placeholder="e.g. product strategy, AI tools, content systems">
+      </div>
+
+      <div class="row">
+        <label>Tone</label>
+        <div class="tones" id="tones">
+          <div class="tone-pill active" data-tone="professional">💼 Professional</div>
+          <div class="tone-pill" data-tone="casual">😊 Casual</div>
+          <div class="tone-pill" data-tone="bold">⚡ Bold</div>
+        </div>
+      </div>
+
+      <button class="btn-generate" type="submit" id="genBtn">
+        ✍️ Generate my bio
+      </button>
+    </form>
+
+    <div id="error" class="error" style="display:none"></div>
+
+    <div id="output" class="output-wrap" style="display:none">
+      <div class="output-header">
+        <div class="output-label">Your bio</div>
+        <div class="word-count" id="wordCount"></div>
+      </div>
+      <div class="output-box" id="bioText"></div>
+      <div class="action-row">
+        <button class="btn-copy" id="copyBtn">Copy to clipboard</button>
+        <button class="btn-regen" id="regenBtn">↺ Regenerate</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="below">
+    <div class="features">
+      <div class="feat">
+        <div class="feat-icon">⚡</div>
+        <h3>Instant results</h3>
+        <p>No waiting. Your bio is written in seconds, not minutes.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🎯</div>
+        <h3>Skill-aware</h3>
+        <p>Add your key specialisms and the AI weaves them naturally into the copy.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🗣️</div>
+        <h3>Three tones</h3>
+        <p>Professional, casual, or bold — match the energy of the context.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">💯</div>
+        <h3>Free, no sign-up</h3>
+        <p>No account, no email, no credit card. Generate as many times as you need.</p>
+      </div>
+    </div>
+
+    <div class="tips">
+      <h2>How to write a great professional bio</h2>
+      <ol>
+        <li><strong>Lead with what you do, not your title.</strong> "I build AI tools for indie founders" is stronger than "Founder &amp; CEO." Start with the value, not the label.</li>
+        <li><strong>Include a credibility signal.</strong> A number, a recognisable company, a specific outcome. One concrete detail beats five vague adjectives.</li>
+        <li><strong>Match the platform.</strong> LinkedIn rewards measured polish. A speaker bio needs momentum. A Twitter bio rewards personality. The same person, three different bios.</li>
+        <li><strong>Write in third person for bios, first person for social.</strong> Third person is convention for formal bios (speaker pages, about pages); first person feels more natural on LinkedIn or Instagram.</li>
+        <li><strong>End with something forward-looking.</strong> Where you're headed, what you're working on, or what you want to be known for. It gives the reader a reason to care.</li>
+        <li><strong>Refresh it quarterly.</strong> Your bio should reflect your current work, not where you were 18 months ago.</li>
+      </ol>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>
+    Built by <a href="https://rosabuilds.com" target="_blank" rel="noopener">Rosalinda Solana</a>
+    &nbsp;·&nbsp; AI infrastructure for builders
+    &nbsp;·&nbsp; <a href="https://rosabuilds.com" target="_blank" rel="noopener">rosabuilds.com</a>
+  </p>
+</footer>
+
+<script>
+(function () {
+  const API = 'https://ai-bio-generator-murex.vercel.app/api/generate';
+  let currentTone = 'professional';
+
+  // Tone selection
+  document.querySelectorAll('.tone-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.tone-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentTone = pill.dataset.tone;
+    });
+  });
+
+  async function generate() {
+    const name = document.getElementById('name').value.trim();
+    const title = document.getElementById('title').value.trim();
+    const skills = document.getElementById('skills').value.trim();
+    if (!name || !title) return;
+
+    const btn = document.getElementById('genBtn');
+    const errEl = document.getElementById('error');
+    const outEl = document.getElementById('output');
+    const bioEl = document.getElementById('bioText');
+    const wcEl = document.getElementById('wordCount');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Writing your bio…';
+    errEl.style.display = 'none';
+    outEl.style.display = 'none';
+
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ name, title, skills, tone: currentTone }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Generation failed. Please try again.');
+
+      bioEl.textContent = data.bio;
+      const wc = data.bio.split(/\s+/).filter(Boolean).length;
+      wcEl.textContent = `~${wc} words`;
+      outEl.style.display = 'block';
+      outEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      errEl.textContent = '⚠️ ' + (err.message || 'Something went wrong. Try again.');
+      errEl.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '✍️ Generate my bio';
+    }
+  }
+
+  document.getElementById('bioForm').addEventListener('submit', e => { e.preventDefault(); generate(); });
+  document.getElementById('regenBtn').addEventListener('click', generate);
+
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const text = document.getElementById('bioText').textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = 'Copy to clipboard'; }, 2200);
+    } catch {}
+  });
+})();
+</script>
+
+</body>
+</html>
